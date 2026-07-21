@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>KPOP深圳组队</title>
+<style>
+  :root {
+    --bg: #0d0d1a;
+    --bg-card: #1a0a2e;
+    --purple: #c084fc;
+    --purple-light: #e0b0ff;
+    --pink: #f472b6;
+    --pink-light: #f9a8d4;
+    --green: #34d399;
+    --text: #f0e6ff;
+    --text-secondary: #a094b8;
+    --text-muted: #6b5e80;
+    --border: #2d1b4e;
+    --danger: #f87171;
+    --radius: 16px;
+    --shadow: 0 4px 24px rgba(192, 132, 252, 0.1);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 14px;
+    line-height: 1.6;
+    max-width: 430px;
+    margin: 0 auto;
+    min-height: 100vh;
+  }
+
+  /* ── 顶部 ── */
+  .topbar {
+    background: rgba(13,13,26,0.95);
+    backdrop-filter: blur(10px);
+    padding: 12px 16px;
+    text-align: center;
+    font-weight: 700;
+    font-size: 17px;
+    color: var(--purple-light);
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  /* ── Banner ── */
+  .hero {
+    background: linear-gradient(135deg, #1a0a2e, #2d1050);
+    padding: 24px 20px;
+    margin: 12px;
+    border-radius: 20px;
+    border: 1px solid rgba(192, 132, 252, 0.15);
+  }
+  .hero h1 { font-size: 22px; font-weight: 700; margin-bottom: 4px; }
+  .hero p { font-size: 13px; color: var(--text-secondary); }
+  .hero-stats { display: flex; gap: 32px; margin-top: 16px; }
+  .hero-stats .num { font-size: 28px; font-weight: 700; color: var(--purple); }
+  .hero-stats .lbl { font-size: 12px; color: var(--text-secondary); }
+
+  /* ── 筛选 ── */
+  .filters { padding: 0 12px; display: flex; gap: 8px; overflow-x: auto; margin-bottom: 12px; }
+  .filters::-webkit-scrollbar { display: none; }
+  .filter-tag {
+    padding: 8px 16px; border-radius: 50px; font-size: 13px; white-space: nowrap;
+    background: rgba(255,255,255,0.04); color: var(--text-secondary);
+    border: 1px solid rgba(192,132,252,0.1); cursor: pointer;
+  }
+  .filter-tag.active { background: rgba(192,132,252,0.2); color: var(--purple-light); border-color: rgba(192,132,252,0.3); }
+
+  /* ── 组队卡片 ── */
+  .team-list { padding: 0 12px 100px; }
+  .team-card {
+    background: linear-gradient(135deg, #1a0a2e, #1f1040);
+    border: 1px solid rgba(192,132,252,0.1);
+    border-radius: 16px; padding: 20px; margin-bottom: 14px;
+    position: relative; cursor: pointer; transition: all 0.15s;
+  }
+  .team-card:active { border-color: rgba(192,132,252,0.3); transform: scale(0.99); }
+  .card-status {
+    position: absolute; top: 16px; right: 16px;
+    font-size: 11px; padding: 3px 12px; border-radius: 50px;
+    background: rgba(244,114,182,0.15); color: var(--pink);
+  }
+  .card-status.done { background: rgba(52,211,153,0.15); color: var(--green); }
+  .card-song { font-size: 20px; font-weight: 700; margin-bottom: 12px; padding-right: 80px; }
+  .card-positions { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
+  .card-pos {
+    padding: 4px 12px; border-radius: 50px; font-size: 12px;
+    background: rgba(192,132,252,0.12); color: var(--purple-light);
+  }
+  .card-info { margin-bottom: 12px; }
+  .card-info-row { display: flex; align-items: center; gap: 6px; font-size: 13px; color: var(--text-secondary); margin-bottom: 3px; }
+  .card-footer {
+    display: flex; align-items: center; justify-content: space-between;
+    padding-top: 12px; border-top: 1px solid rgba(192,132,252,0.06);
+  }
+  .card-members { display: flex; align-items: center; gap: 8px; }
+  .card-avatars { display: flex; }
+  .card-avatar {
+    width: 32px; height: 32px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--purple), var(--pink));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; color: white; margin-left: -8px;
+    border: 2px solid var(--bg-card);
+  }
+  .card-avatar:first-child { margin-left: 0; }
+  .card-count { font-size: 13px; color: var(--text-secondary); }
+  .card-right { font-size: 12px; color: var(--text-muted); }
+  .joined-badge {
+    position: absolute; top: 16px; left: 16px;
+    font-size: 11px; padding: 3px 10px; border-radius: 50px;
+    background: rgba(52,211,153,0.15); color: var(--green);
+  }
+
+  /* ── FAB ── */
+  .fab {
+    position: fixed; bottom: 24px; right: 24px;
+    width: 56px; height: 56px; border-radius: 50%;
+    background: linear-gradient(135deg, #c084fc, #f472b6);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 28px; color: white; cursor: pointer;
+    box-shadow: 0 8px 32px rgba(192,132,252,0.4); z-index: 50;
+    text-decoration: none;
+  }
+
+  /* ── 弹窗 ── */
+  .modal-overlay {
+    position: fixed; inset: 0; background: rgba(0,0,0,0.6);
+    display: flex; align-items: flex-end; z-index: 200; display: none;
+  }
+  .modal-overlay.show { display: flex; }
+  .modal {
+    background: #1a0a2e; border-radius: 24px 24px 0 0; padding: 24px 20px 40px;
+    width: 100%; max-height: 80vh; overflow-y: auto;
+  }
+  .modal h3 { font-size: 18px; color: var(--purple-light); margin-bottom: 16px; }
+  .modal-close {
+    position: absolute; top: 16px; right: 20px;
+    background: none; border: none; color: var(--text-muted); font-size: 24px; cursor: pointer;
+  }
+  .form-group { margin-bottom: 16px; }
+  .form-group label { font-size: 13px; color: var(--purple); font-weight: 600; display: block; margin-bottom: 6px; }
+  .form-group input, .form-group textarea, .form-group select {
+    width: 100%; padding: 12px 14px; border-radius: 10px;
+    background: rgba(255,255,255,0.04); border: 1px solid rgba(192,132,252,0.15);
+    font-size: 14px; color: var(--text); font-family: inherit;
+  }
+  .form-group input:focus { border-color: rgba(192,132,252,0.4); outline: none; }
+  .btn-submit {
+    width: 100%; padding: 14px; border-radius: 50px; border: none;
+    background: linear-gradient(135deg, #c084fc, #f472b6);
+    color: white; font-size: 16px; font-weight: 700; cursor: pointer;
+  }
+  .pos-input-wrap { display: flex; gap: 8px; }
+  .pos-input-wrap input { flex: 1; }
+  .pos-add {
+    padding: 12px 16px; border-radius: 10px; background: rgba(192,132,252,0.15);
+    color: var(--purple); font-size: 13px; font-weight: 600; cursor: pointer; white-space: nowrap;
+  }
+  .pos-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+  .pos-tag {
+    display: flex; align-items: center; gap: 6px; padding: 6px 14px;
+    border-radius: 50px; font-size: 12px; background: rgba(192,132,252,0.15); color: var(--purple-light);
+  }
+  .pos-remove { color: var(--danger); cursor: pointer; font-size: 14px; }
+
+  /* ── Toast ── */
+  .toast {
+    position: fixed; top: 80px; left: 50%; transform: translateX(-50%);
+    background: #2d1050; color: var(--purple-light); padding: 10px 24px;
+    border-radius: 50px; font-size: 14px; font-weight: 600; z-index: 300;
+    animation: toastIn 0.3s; display: none;
+  }
+  .toast.show { display: block; }
+  @keyframes toastIn { from { opacity: 0; transform: translateX(-50%) translateY(-10px); } }
+</style>
+</head>
+<body>
+
+<div class="topbar">🎵 KPOP深圳组队</div>
+
+<div class="hero">
+  <h1>🎵 深圳 Kpop 路演组队</h1>
+  <p>找到你的路演搭子，一起上舞台！</p>
+  <div class="hero-stats">
+    <div><div class="num" id="totalTeams">5</div><div class="lbl">组队中</div></div>
+    <div><div class="num" id="totalMembers">15</div><div class="lbl">舞者在线</div></div>
+  </div>
+</div>
+
+<div class="filters" id="districtFilter">
+  <div class="filter-tag active" data-district="">全部</div>
+  <div class="filter-tag" data-district="南山">南山</div>
+  <div class="filter-tag" data-district="福田">福田</div>
+  <div class="filter-tag" data-district="罗湖">罗湖</div>
+  <div class="filter-tag" data-district="宝安">宝安</div>
+  <div class="filter-tag" data-district="龙华">龙华</div>
+  <div class="filter-tag" data-district="龙岗">龙岗</div>
+</div>
+
+<div class="team-list" id="teamList"></div>
+
+<a class="fab" href="javascript:void(0)" onclick="openPublish()">+</a>
+
+<div class="toast" id="toast"></div>
+
+<!-- 发布弹窗 -->
+<div class="modal-overlay" id="publishModal">
+  <div class="modal">
+    <h3>🎵 发布组队信息</h3>
+    <div class="form-group"><label>🎤 歌曲名 *</label><input id="fSong" placeholder="如：Iconic、Supernova..."></div>
+    <div class="form-group">
+      <label>🎯 缺什么位 *</label>
+      <div class="pos-input-wrap">
+        <input id="fPos" placeholder="如：moka位、jiwoo位">
+        <div class="pos-add" onclick="addPosition()">添加</div>
+      </div>
+      <div class="pos-tags" id="posTags"></div>
+    </div>
+    <div class="form-group"><label>📅 排练时间 *</label><input id="fRehearsal" placeholder="如：8月7日晚"></div>
+    <div class="form-group"><label>🎬 路演时间 *</label><input id="fPerf" placeholder="如：8月8日路演"></div>
+    <div class="form-group"><label>👥 人数上限</label><input id="fMax" type="number" value="5" min="1" max="20"></div>
+    <div class="form-group"><label>💎 上车条件</label><select id="fCondition"><option value="">无</option><option value="上车请喝奶茶">🧋 奶茶</option><option value="上车请V20">💰 V20</option><option value="上车请喝奶茶或V20">🧋+💰</option></select></div>
+    <div class="form-group"><label>📍 深圳区域</label><select id="fDistrict"><option value="">不限</option><option>南山</option><option>福田</option><option>罗湖</option><option>宝安</option><option>龙华</option><option>龙岗</option></select></div>
+    <div class="form-group"><label>📝 备注</label><textarea id="fNotes" rows="2" placeholder="补充说明..."></textarea></div>
+    <button class="btn-submit" onclick="publishTeam()">🚀 发布组队</button>
+    <div style="text-align:center;margin-top:16px;">
+      <span style="color:var(--text-muted);cursor:pointer;font-size:13px;" onclick="closePublish()">取消</span>
+    </div>
+  </div>
+</div>
+
+<script>
+// ─── Mock 数据 ───
+let teams = [
+  { id:1, song_name:'Iconic', missing_positions:['moka位','jiwoo位'], rehearsal_time:'8月7日晚', performance_time:'8月8日路演', max_members:5, join_condition:'上车请喝奶茶', notes:'aespa新歌！急急急！', district:'南山', status:'active', member_count:2, members:[{nickname:'小舞',position:'karina位'},{nickname:'阿琳',position:'winter位'}] },
+  { id:2, song_name:'恋爱的条件', missing_positions:['姜位','罗位'], rehearsal_time:'周六下午', performance_time:'周日下午', max_members:5, join_condition:'', notes:'等1人！', district:'福田', status:'active', member_count:4, members:[{nickname:'葡萄'},{nickname:'柠檬'},{nickname:'草莓'},{nickname:'芒果'}] },
+  { id:3, song_name:'WDA', missing_positions:['柳智敏成品位'], rehearsal_time:'7月26日', performance_time:'8月1日路演', max_members:5, join_condition:'上车请喝奶茶或V20', notes:'急急急！', district:'罗湖', status:'active', member_count:3, members:[{nickname:'樱桃'},{nickname:'西瓜'},{nickname:'蜜桃'}] },
+  { id:4, song_name:'Supernova', missing_positions:['winter位','ningning位'], rehearsal_time:'下周三晚', performance_time:'下周六路演', max_members:4, join_condition:'', notes:'会跳的来！', district:'宝安', status:'active', member_count:2, members:[{nickname:'布丁'},{nickname:'奶茶'}] },
+  { id:5, song_name:'Drama', missing_positions:['全员缺1'], rehearsal_time:'这周末', performance_time:'下周末路演', max_members:5, join_condition:'奶茶就行', notes:'随便什么位！', district:'龙华', status:'active', member_count:4, members:[{nickname:'泡芙'},{nickname:'曲奇'},{nickname:'蛋糕'},{nickname:'果冻'}] },
+];
+let posList = [];
+let currentDistrict = '';
+
+function render() {
+  let filtered = teams.filter(t => t.status === 'active');
+  if (currentDistrict) filtered = filtered.filter(t => t.district === currentDistrict);
+  
+  const totalMembers = filtered.reduce((s,t) => s + t.member_count, 0);
+  document.getElementById('totalTeams').textContent = filtered.length;
+  document.getElementById('totalMembers').textContent = totalMembers;
+
+  let html = '';
+  filtered.forEach(t => {
+    const avatars = t.members.map(m => `<div class="card-avatar">${m.nickname?m.nickname[0]:'👤'}</div>`).join('');
+    const positions = t.missing_positions.map(p => `<span class="card-pos">🎯 ${p}</span>`).join('');
+    html += `
+      <div class="team-card" onclick="showDetail(${t.id})">
+        <div class="card-status">🔥 组队中</div>
+        <div class="card-song">🎤 ${t.song_name}</div>
+        <div class="card-positions">${positions}</div>
+        <div class="card-info">
+          <div class="card-info-row">📅 排练：${t.rehearsal_time}</div>
+          <div class="card-info-row">🎬 路演：${t.performance_time}</div>
+          ${t.join_condition ? `<div class="card-info-row">💎 ${t.join_condition}</div>` : ''}
+        </div>
+        <div class="card-footer">
+          <div class="card-members">
+            <div class="card-avatars">${avatars}</div>
+            <span class="card-count">${t.member_count}/${t.max_members}人</span>
+          </div>
+          <div class="card-right">📍 ${t.district || '未设置'}</div>
+        </div>
+      </div>`;
+  });
+  document.getElementById('teamList').innerHTML = html || '<div style="text-align:center;padding:60px;color:var(--text-muted);">🎵 暂无组队信息</div>';
+}
+
+// 筛选
+document.getElementById('districtFilter').addEventListener('click', function(e) {
+  if (e.target.classList.contains('filter-tag')) {
+    this.querySelectorAll('.filter-tag').forEach(t => t.classList.remove('active'));
+    e.target.classList.add('active');
+    currentDistrict = e.target.dataset.district;
+    render();
+  }
+});
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2000);
+}
+
+function openPublish() {
+  document.getElementById('publishModal').classList.add('show');
+  posList = [];
+  document.getElementById('posTags').innerHTML = '';
+}
+function closePublish() {
+  document.getElementById('publishModal').classList.remove('show');
+}
+
+function addPosition() {
+  const input = document.getElementById('fPos');
+  const val = input.value.trim();
+  if (!val) return;
+  if (posList.includes(val)) { showToast('该位置已添加'); return; }
+  posList.push(val);
+  input.value = '';
+  document.getElementById('posTags').innerHTML = posList.map((p,i) => 
+    `<span class="pos-tag">${p}<span class="pos-remove" onclick="removePos(${i})">✕</span></span>`
+  ).join('');
+}
+
+function removePos(i) {
+  posList.splice(i,1);
+  document.getElementById('posTags').innerHTML = posList.map((p,i) => 
+    `<span class="pos-tag">${p}<span class="pos-remove" onclick="removePos(${i})">✕</span></span>`
+  ).join('');
+}
+
+function publishTeam() {
+  const song = document.getElementById('fSong').value.trim();
+  if (!song) { showToast('请输入歌曲名'); return; }
+  if (posList.length === 0) { showToast('请添加缺位信息'); return; }
+  const rehearsal = document.getElementById('fRehearsal').value.trim();
+  if (!rehearsal) { showToast('请输入排练时间'); return; }
+  const perf = document.getElementById('fPerf').value.trim();
+  if (!perf) { showToast('请输入路演时间'); return; }
+
+  teams.unshift({
+    id: Date.now(),
+    song_name: song,
+    missing_positions: [...posList],
+    rehearsal_time: rehearsal,
+    performance_time: perf,
+    max_members: parseInt(document.getElementById('fMax').value) || 5,
+    join_condition: document.getElementById('fCondition').value,
+    notes: document.getElementById('fNotes').value.trim(),
+    district: document.getElementById('fDistrict').value,
+    status: 'active',
+    member_count: 1,
+    members: [{nickname:'我',position:'队长位'}]
+  });
+
+  closePublish();
+  ['fSong','fPos','fRehearsal','fPerf','fNotes'].forEach(id => document.getElementById(id).value = '');
+  posList = [];
+  showToast('发布成功! 🎉');
+  render();
+}
+
+function showDetail(id) {
+  const t = teams.find(x => x.id === id);
+  if (!t) return;
+  const membersHtml = t.members.map(m => 
+    `<div style="display:flex;align-items:center;padding:10px 0;border-bottom:1px solid rgba(192,132,252,0.06);">
+      <div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#c084fc,#f472b6);display:flex;align-items:center;justify-content:center;font-size:15px;color:white;margin-right:10px;">${m.nickname?m.nickname[0]:'👤'}</div>
+      <span style="color:var(--text);">${m.nickname||'匿名'}</span>
+      ${m.position ? `<span style="margin-left:auto;font-size:12px;color:var(--text-secondary);">${m.position}</span>` : ''}
+    </div>`
+  ).join('');
+
+  const modal = document.createElement('div');
+  modal.className = 'modal-overlay show';
+  modal.innerHTML = `<div class="modal" style="border-radius:24px 24px 0 0;">
+    <h3>🎤 ${t.song_name}</h3>
+    <div style="margin-bottom:12px;"><span style="font-size:12px;color:var(--pink);background:rgba(244,114,182,0.15);padding:3px 12px;border-radius:50px;">🔥 组队中</span></div>
+    <div style="margin-bottom:12px;"><b style="color:var(--purple);">🎯 缺什么位</b><br>
+      <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:6px;">
+        ${t.missing_positions.map(p => `<span style="padding:6px 14px;border-radius:50px;font-size:12px;background:rgba(192,132,252,0.15);color:var(--purple-light);">${p}</span>`).join('')}
+      </div>
+    </div>
+    <div style="margin-bottom:12px;"><b style="color:var(--purple);">⏰ 时间</b><br>
+      <span style="color:var(--text-secondary);font-size:13px;">📅 排练：${t.rehearsal_time}</span><br>
+      <span style="color:var(--text-secondary);font-size:13px;">🎬 路演：${t.performance_time}</span>
+    </div>
+    ${t.join_condition ? `<div style="margin-bottom:12px;"><b style="color:var(--purple);">💎 条件</b><br><span style="color:var(--text-secondary);">${t.join_condition}</span></div>` : ''}
+    ${t.notes ? `<div style="margin-bottom:12px;"><b style="color:var(--purple);">📝 备注</b><br><span style="color:var(--text-secondary);">${t.notes}</span></div>` : ''}
+    <div style="margin-bottom:12px;"><b style="color:var(--purple);">👥 已上车 (${t.member_count}/${t.max_members})</b></div>
+    <div style="margin-bottom:12px;">${membersHtml}</div>
+    <div style="height:8px;background:rgba(192,132,252,0.1);border-radius:8px;margin-bottom:8px;">
+      <div style="height:100%;background:linear-gradient(90deg,#c084fc,#f472b6);border-radius:8px;width:${t.member_count/t.max_members*100}%;"></div>
+    </div>
+    <div style="text-align:center;font-size:13px;color:var(--text-muted);margin-bottom:16px;">还差 ${t.max_members - t.member_count} 人满员</div>
+    <button class="btn-submit" onclick="joinTeam(${t.id}, this)">🚀 我要上车</button>
+    <div style="text-align:center;margin-top:12px;color:var(--text-muted);cursor:pointer;font-size:13px;" onclick="this.closest('.modal-overlay').remove()">关闭</div>
+  </div>`;
+  modal.addEventListener('click', function(e) { if (e.target === modal) modal.remove(); });
+  document.body.appendChild(modal);
+}
+
+function joinTeam(id, btn) {
+  const t = teams.find(x => x.id === id);
+  if (!t) return;
+  if (t.member_count >= t.max_members) { showToast('人数已满'); return; }
+  t.member_count++;
+  t.members.push({nickname:'我',position:'新成员'});
+  btn.closest('.modal-overlay').remove();
+  showToast('上车成功! 🚀');
+  render();
+}
+
+// 初始渲染
+render();
+</script>
+</body>
+</html>
