@@ -1,0 +1,89 @@
+/* 组队广场 */
+.page { padding-bottom: 140rpx; min-height: 100vh; }
+
+.hero {
+  background: linear-gradient(135deg, #1a0a2e, #2d1050);
+  padding: 28rpx 24rpx; margin: 20rpx 24rpx;
+  border-radius: 20rpx; border: 1rpx solid rgba(192,132,252,0.2);
+}
+.hero-title { font-size: 36rpx; font-weight: 700; color: var(--text); display: block; margin-bottom: 6rpx; }
+.hero-sub { font-size: 24rpx; color: var(--text-secondary); }
+.hero-stat { margin-top: 20rpx; }
+.stat-num { font-size: 44rpx; font-weight: 700; color: var(--purple); }
+.stat-label { font-size: 22rpx; color: var(--text-secondary); margin-left: 8rpx; }
+
+/* 搜索 */
+.search-bar { padding: 0 24rpx; margin-bottom: 16rpx; }
+.search-wrap { display: flex; align-items: center; background: rgba(255,255,255,0.05); border: 1rpx solid rgba(192,132,252,0.15); border-radius: 60rpx; padding: 16rpx 24rpx; }
+.search-wrap input { flex: 1; background: transparent; font-size: 28rpx; color: var(--text); }
+.search-wrap input::placeholder { color: var(--text-muted); }
+.search-clear { color: var(--text-muted); padding-left: 12rpx; }
+
+/* 筛选 */
+.filter-section { padding: 0 24rpx; margin-bottom: 16rpx; }
+.type-row { display: flex; gap: 10rpx; margin-bottom: 14rpx; }
+.type-tag {
+  flex: 1; text-align: center; padding: 16rpx 0; border-radius: 14rpx;
+  font-size: 26rpx; color: var(--text-secondary);
+  background: rgba(255,255,255,0.04); border: 1rpx solid var(--border);
+}
+.type-tag.active {
+  background: linear-gradient(135deg, rgba(192,132,252,0.35), rgba(244,114,182,0.35));
+  color: var(--text); border-color: rgba(192,132,252,0.5); font-weight: 600;
+}
+.combo-row { white-space: nowrap; }
+.combo-tag {
+  display: inline-block; padding: 12rpx 24rpx; border-radius: 60rpx;
+  font-size: 24rpx; color: var(--text-secondary);
+  background: rgba(255,255,255,0.04); border: 1rpx solid var(--border);
+  margin-right: 12rpx;
+}
+.combo-tag.active {
+  background: linear-gradient(135deg, rgba(192,132,252,0.3), rgba(244,114,182,0.3));
+  color: var(--text); border-color: rgba(192,132,252,0.4);
+}
+
+/* 卡片 */
+.team-list { padding: 0 24rpx; }
+.team-card {
+  background: linear-gradient(135deg, #1a0a2e, #1f1040);
+  border: 1rpx solid var(--border); border-radius: 16rpx;
+  padding: 24rpx; margin-bottom: 20rpx; position: relative;
+}
+.team-card:active { transform: scale(0.99); }
+.joined-badge {
+  position: absolute; top: 20rpx; left: 20rpx; font-size: 20rpx;
+  padding: 4rpx 16rpx; border-radius: 60rpx;
+  background: rgba(52,211,153,0.15); color: var(--green);
+}
+.card-status {
+  position: absolute; top: 20rpx; right: 20rpx; font-size: 20rpx;
+  padding: 4rpx 16rpx; border-radius: 60rpx;
+  background: rgba(244,114,182,0.15); color: var(--pink);
+}
+.card-song { display: flex; flex-wrap: wrap; align-items: center; gap: 12rpx; margin-bottom: 16rpx; padding-right: 140rpx; }
+.combo-badge {
+  font-size: 22rpx; padding: 4rpx 16rpx; border-radius: 60rpx;
+  background: rgba(244,114,182,0.15); color: var(--pink); font-weight: 600;
+}
+.song-name { font-size: 34rpx; font-weight: 700; color: var(--text); }
+.card-positions { display: flex; flex-wrap: wrap; gap: 8rpx; margin-bottom: 16rpx; }
+.pos-tag { padding: 8rpx 20rpx; border-radius: 60rpx; font-size: 22rpx; background: rgba(192,132,252,0.12); color: var(--purple); }
+.card-info { margin-bottom: 16rpx; }
+.info-row { font-size: 24rpx; color: var(--text-secondary); margin-bottom: 6rpx; }
+.card-footer { display: flex; align-items: center; justify-content: space-between; padding-top: 16rpx; border-top: 1rpx solid var(--border-light); }
+.footer-left { display: flex; align-items: center; gap: 12rpx; }
+.member-avatars { display: flex; }
+.avatar {
+  width: 48rpx; height: 48rpx; border-radius: 50%;
+  background: linear-gradient(135deg, var(--purple), var(--pink));
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22rpx; color: white; border: 2rpx solid #1a0a2e;
+}
+.member-count { font-size: 24rpx; color: var(--text-secondary); }
+.audit-badge { font-size: 20rpx; padding: 4rpx 16rpx; border-radius: 60rpx; }
+.audit-none { background: rgba(52,211,153,0.15); color: var(--green); }
+.audit-light { background: rgba(96,165,250,0.15); color: var(--blue); }
+.audit-medium { background: rgba(250,204,21,0.15); color: var(--yellow); }
+.audit-medium_strict { background: rgba(251,146,60,0.15); color: var(--orange); }
+.audit-strict { background: rgba(248,113,113,0.15); color: var(--red); }

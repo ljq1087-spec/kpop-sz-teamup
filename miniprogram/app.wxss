@@ -1,0 +1,290 @@
+/* KPOP深圳组队 - 全局样式 */
+page {
+  --bg: #0a0a14;
+  --bg-card: #1a0a2e;
+  --bg-card2: #1f1040;
+  --purple: #c084fc;
+  --purple-light: #e0b0ff;
+  --pink: #f472b6;
+  --pink-light: #f9a8d4;
+  --blue: #60a5fa;
+  --blue-light: #93c5fd;
+  --green: #34d399;
+  --green-light: #6ee7b7;
+  --yellow: #facc15;
+  --orange: #fb923c;
+  --red: #f87171;
+  --text: #f0e6ff;
+  --text-secondary: #a094b8;
+  --text-muted: #6b5e80;
+  --border: rgba(192, 132, 252, 0.12);
+  --border-light: rgba(192, 132, 252, 0.06);
+  --radius: 14rpx;
+  --radius-lg: 20rpx;
+  --radius-sm: 10rpx;
+
+  background-color: var(--bg);
+  background-image: radial-gradient(circle at 20% 10%, rgba(192,132,252,0.12), transparent 40%),
+                    radial-gradient(circle at 80% 90%, rgba(244,114,182,0.1), transparent 40%);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  font-size: 28rpx;
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+/* 通用卡片 */
+.card {
+  background: linear-gradient(135deg, var(--bg-card), var(--bg-card2));
+  border: 1rpx solid var(--border);
+  border-radius: var(--radius);
+  padding: 24rpx;
+  margin: 0 24rpx 20rpx;
+}
+
+/* 通用按钮 */
+.btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 60rpx;
+  font-weight: 600;
+  font-size: 28rpx;
+  padding: 18rpx 40rpx;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--purple), var(--pink));
+  color: white;
+  border: none;
+}
+
+.btn-success {
+  background: linear-gradient(135deg, var(--green), #10b981);
+  color: white;
+  border: none;
+}
+
+.btn-outline {
+  background: transparent;
+  border: 2rpx solid var(--purple);
+  color: var(--purple);
+}
+
+.btn-danger-outline {
+  background: transparent;
+  border: 2rpx solid var(--red);
+  color: var(--red);
+}
+
+.btn-sm {
+  padding: 10rpx 28rpx;
+  font-size: 24rpx;
+}
+
+.btn-block {
+  width: 100%;
+}
+
+/* 标签 */
+.tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 4rpx 16rpx;
+  border-radius: 60rpx;
+  font-size: 22rpx;
+}
+
+.tag-purple {
+  background: rgba(192, 132, 252, 0.15);
+  color: var(--purple-light);
+}
+
+.tag-pink {
+  background: rgba(244, 114, 182, 0.15);
+  color: var(--pink-light);
+}
+
+.tag-green {
+  background: rgba(52, 211, 153, 0.15);
+  color: var(--green);
+}
+
+.tag-blue {
+  background: rgba(96, 165, 250, 0.15);
+  color: var(--blue);
+}
+
+.tag-yellow {
+  background: rgba(250, 204, 21, 0.15);
+  color: var(--yellow);
+}
+
+.tag-orange {
+  background: rgba(251, 146, 60, 0.15);
+  color: var(--orange);
+}
+
+.tag-red {
+  background: rgba(248, 113, 113, 0.15);
+  color: var(--red);
+}
+
+/* 空状态 */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 100rpx 40rpx;
+  color: var(--text-muted);
+}
+
+.empty-state .empty-icon {
+  font-size: 80rpx;
+  margin-bottom: 20rpx;
+}
+
+.empty-state .empty-text {
+  font-size: 28rpx;
+  color: var(--text-secondary);
+  margin-bottom: 8rpx;
+}
+
+.empty-state .empty-sub {
+  font-size: 24rpx;
+}
+
+/* 加载 */
+.loading {
+  text-align: center;
+  padding: 60rpx;
+  color: var(--text-muted);
+  font-size: 26rpx;
+}
+
+/* 进度条 */
+.progress-bar {
+  height: 10rpx;
+  background: rgba(192, 132, 252, 0.1);
+  border-radius: 10rpx;
+  overflow: hidden;
+  margin: 16rpx 0 8rpx;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--purple), var(--pink));
+  border-radius: 10rpx;
+  transition: width 0.3s;
+}
+
+/* FAB */
+.fab {
+  position: fixed;
+  bottom: 120rpx;
+  right: 32rpx;
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--purple), var(--pink));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 52rpx;
+  color: white;
+  box-shadow: 0 8rpx 32rpx rgba(192, 132, 252, 0.4);
+  z-index: 50;
+}
+
+.fab:active {
+  transform: scale(0.9);
+}
+
+/* 通用表单 */
+.form-card {
+  background: linear-gradient(135deg, var(--bg-card), var(--bg-card2));
+  border: 1rpx solid var(--border);
+  border-radius: 20rpx;
+  padding: 28rpx 24rpx;
+}
+
+.form-title {
+  font-size: 36rpx;
+  font-weight: 700;
+  color: var(--text);
+  display: block;
+  margin-bottom: 8rpx;
+}
+
+.form-sub {
+  font-size: 24rpx;
+  color: var(--text-secondary);
+  display: block;
+  margin-bottom: 28rpx;
+}
+
+.form-group {
+  margin-bottom: 28rpx;
+}
+
+.form-label {
+  font-size: 26rpx;
+  color: var(--purple);
+  font-weight: 600;
+  display: block;
+  margin-bottom: 12rpx;
+}
+
+.form-label .required {
+  color: var(--red);
+}
+
+.form-input {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1rpx solid rgba(192, 132, 252, 0.15);
+  border-radius: var(--radius-sm);
+  padding: 20rpx 24rpx;
+  font-size: 28rpx;
+  color: var(--text);
+  box-sizing: border-box;
+}
+
+.form-input::placeholder {
+  color: var(--text-muted);
+}
+
+.form-textarea {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1rpx solid rgba(192, 132, 252, 0.15);
+  border-radius: var(--radius-sm);
+  padding: 20rpx 24rpx;
+  font-size: 28rpx;
+  color: var(--text);
+  min-height: 120rpx;
+  box-sizing: border-box;
+}
+
+/* 弹性布局 */
+.flex-row {
+  display: flex;
+  align-items: center;
+}
+
+.flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.flex-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12rpx;
+}
+
+.flex-1 {
+  flex: 1;
+}

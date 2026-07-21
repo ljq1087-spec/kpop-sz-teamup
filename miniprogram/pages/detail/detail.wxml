@@ -1,0 +1,150 @@
+<!-- 组队详情 -->
+<view class="page" wx:if="{{team}}">
+  <!-- 头部 -->
+  <view class="dt-head">
+    <text class="dt-status {{team.status === 'completed' ? 'done' : ''}}">
+      {{team.status === 'completed' ? '✅ 已完队' : (team.status === 'cancelled' ? '❌ 已取消' : '🔥 组队中')}}
+    </text>
+    <view>
+      <text class="dt-type">{{comboTypeEmoji}} {{comboTypeName}} · {{team.combo_name}}</text>
+    </view>
+    <text class="dt-song">🎤 {{team.song_name}}</text>
+    <text class="dt-creator">{{team.creator_nickname || '匿名'}} 发布</text>
+  </view>
+
+  <!-- 审核等级 -->
+  <view class="audit-banner ban-{{team.audit_level}}">
+    <text class="ab-title">{{auditEmoji}} 上车审核：{{auditName}}</text>
+    <text class="ab-desc">{{auditDesc}}</text>
+  </view>
+
+  <!-- 缺位 -->
+  <view class="section">
+    <text class="sec-title">🎯 还缺什么位置</text>
+    <view class="pos-tags">
+      <text class="pos-tag" wx:for="{{team.missing_positions}}" wx:key="*this">{{item}}</text>
+    </view>
+  </view>
+
+  <!-- 时间 -->
+  <view class="section">
+    <text class="sec-title">⏰ 时间安排</text>
+    <text class="sec-text">📅 排练：{{team.rehearsal_time}}</text>
+    <text class="sec-text" style="margin-top:8rpx;">🎬 路演：{{team.performance_time}}</text>
+  </view>
+
+  <!-- 地点 -->
+  <view class="section">
+    <text class="sec-title">📍 排练地点</text>
+    <text class="sec-text">{{locationName}}</text>
+    <text class="sec-sub" wx:if="{{team.location_note}}">{{team.location_note}}</text>
+  </view>
+
+  <!-- 备注 -->
+  <view class="section" wx:if="{{team.notes}}">
+    <text class="sec-title">📝 备注</text>
+    <text class="sec-text">{{team.notes}}</text>
+  </view>
+
+  <!-- 已上车成员 -->
+  <view class="section">
+    <text class="sec-title">👥 已上车 ({{team.member_count}}/{{team.max_members}})</text>
+    <text class="wx-note" wx:if="{{contactVisible}}">💡 同车成员微信号互相可见，方便约排练</text>
+    <view class="member-item" wx:for="{{team.members}}" wx:key="openid">
+      <view class="m-avatar {{item.openid === team.creator_openid ? 'creator' : ''}}">{{item.nickname ? item.nickname[0] : '👤'}}</view>
+      <view class="m-info">
+        <text class="m-name">{{item.nickname || '匿名'}}</text>
+        <text class="m-part" wx:if="{{item.part}}">跳 {{item.part}}</text>
+        <text class="m-wx" wx:if="{{contactVisible}}" bindtap="copyWx" data-wx="{{item.wechat}}">💬 微信：{{item.wechat}}</text>
+      </view>
+      <text class="m-tag" wx:if="{{item.openid === team.creator_openid}}">车主</text>
+    </view>
+    <view class="progress-bar">
+      <view class="progress-fill" style="width: {{team.member_count / team.max_members * 100}}%"></view>
+    </view>
+    <text class="progress-text">还差 {{team.max_members - team.member_count}} 人满员</text>
+  </view>
+
+  <!-- 待审核申请（车主可见） -->
+  <view class="section" wx:if="{{team.is_creator && pendingApps.length > 0}}" style="border-color:rgba(192,132,252,0.25);">
+    <text class="sec-title">📩 待审核申请 ({{pendingApps.length}})</text>
+    <view class="app-item" wx:for="{{pendingApps}}" wx:key="openid">
+      <view class="app-head">
+        <view class="m-avatar" style="margin-right:16rpx;">{{item.nickname ? item.nickname[0] : '👤'}}</view>
+        <view class="m-info">
+          <text class="m-name">{{item.nickname || '匿名'}}</text>
+          <text class="m-part">想跳：{{item.part || '未填写'}}</text>
+        </view>
+      </view>
+      <view class="app-video" bindtap="viewVideo" data-url="{{item.video_url}}">
+        <text>▶️</text>
+        <text class="vu-text">{{item.video_url && item.video_url.indexOf('[本地]') === 0 ? '📹 已上传视频（仅车主可见）' : (item.video_url || '未提供视频')}}</text>
+      </view>
+      <view class="app-acts">
+        <button class="btn btn-danger-outline btn-sm" bindtap="goReject" data-openid="{{item.openid}}">委婉拒绝</button>
+        <button class="btn btn-success btn-sm" bindtap="reviewApp" data-openid="{{item.openid}}" data-approve="1">✅ 接受组队</button>
+      </view>
+    </view>
+  </view>
+
+  <view style="height:260rpx;"></view>
+
+  <!-- 底部操作栏 -->
+  <view class="bottom-actions">
+    <!-- 无审核直接上车 -->
+    <view class="act-row" wx:if="{{!team.has_joined && !team.is_creator && team.audit_level === 'none' && !myApp}}">
+      <input class="join-input" placeholder="你跳什么位置？" value="{{joinPart}}" bindinput="onJoinInput"/>
+      <button class="btn btn-primary" style="white-space:nowrap;flex-shrink:0;" bindtap="doJoin">🚀 我要上车</button>
+    </view>
+
+    <!-- 有审核申请 -->
+    <view class="apply-wrap" wx:if="{{!team.has_joined && !team.is_creator && team.audit_level !== 'none' && (!myApp || myApp.status === 'rejected')}}">
+      <text class="aw-title">📹 申请上车（需车主审核）</text>
+      <view class="opt-row">
+        <view class="opt {{applyMode === 'upload' ? 'active' : ''}}" bindtap="setApplyMode" data-mode="upload">📹 上传视频</view>
+        <view class="opt {{applyMode === 'link' ? 'active' : ''}}" bindtap="setApplyMode" data-mode="link">🔗 视频链接</view>
+      </view>
+      <view class="upload-box {{videoVal ? 'done' : ''}}" wx:if="{{applyMode === 'upload'}}" bindtap="mockUpload">
+        {{videoVal ? ('✅ 已选择：'+videoVal+'（点击重选）') : '⬆️ 点击上传舞蹈视频（仅车主可见）'}}
+      </view>
+      <input wx:if="{{applyMode === 'link'}}" class="join-input" placeholder="舞蹈视频链接（抖音/B站/视频号）" value="{{videoVal}}" bindinput="onVideoInput"/>
+      <input class="join-input" placeholder="想跳的位置？（如：karina位）" value="{{joinPart}}" bindinput="onJoinInput"/>
+      <text class="aw-hint">💡 车主看过后决定通过，视频仅车主可见</text>
+      <button class="btn btn-primary btn-block" bindtap="doApply">📩 提交申请</button>
+    </view>
+
+    <!-- 待审核 -->
+    <view class="status-wrap" wx:if="{{myApp && myApp.status === 'pending'}}">
+      <text class="sw-pending">⏳ 申请已提交，等待车主审核视频...</text>
+    </view>
+
+    <!-- 被拒绝 -->
+    <view class="status-wrap" wx:if="{{myApp && myApp.status === 'rejected'}}">
+      <text class="sw-rejected">😢 这次没通过，不过车主留了句话：</text>
+      <view class="reject-msg">"{{myApp.reject_msg || '这次坑位已满，期待下次同车～'}}"</view>
+      <button class="btn btn-primary btn-block" bindtap="reapply">重新申请</button>
+    </view>
+
+    <!-- 已上车 -->
+    <view class="joined-row" wx:if="{{team.has_joined && !team.is_creator}}">
+      <text class="joined-text">✅ 你已上车</text>
+      <button class="btn btn-danger-outline btn-sm" bindtap="doLeave">下车</button>
+    </view>
+
+    <!-- 车主操作 -->
+    <view class="creator-row" wx:if="{{team.is_creator}}">
+      <button class="btn btn-success btn-sm" wx:if="{{team.member_count >= 2}}" bindtap="doComplete">✅ 组队完成</button>
+      <button class="btn btn-danger-outline btn-sm" bindtap="doCancel">❌ 取消组队</button>
+    </view>
+
+    <!-- 已完成/已取消 -->
+    <view class="status-wrap" wx:if="{{team.status === 'completed'}}">
+      <text style="color:var(--green);font-size:28rpx;font-weight:600;">🎉 这支舞已经跳完啦，记录已留在小程序</text>
+    </view>
+    <view class="status-wrap" wx:if="{{team.status === 'cancelled'}}">
+      <text style="color:var(--red);font-size:28rpx;font-weight:600;">❌ 该组队已取消</text>
+    </view>
+  </view>
+</view>
+
+<view class="loading" wx:if="{{!team}}">加载中...</view>

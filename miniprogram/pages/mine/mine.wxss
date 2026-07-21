@@ -1,0 +1,35 @@
+/* 我的 */
+.page { padding: 20rpx 24rpx; }
+
+.user-card {
+  background: linear-gradient(135deg, #1a0a2e, #2d1050);
+  border: 1rpx solid var(--border); border-radius: 20rpx;
+  padding: 40rpx 28rpx; margin-bottom: 24rpx; text-align: center;
+}
+.user-avatar { font-size: 72rpx; margin-bottom: 16rpx; display: block; }
+.user-name { font-size: 34rpx; font-weight: 700; color: var(--text); display: block; }
+.user-bio { font-size: 24rpx; color: var(--text-secondary); margin-top: 6rpx; display: block; }
+.edit-link { font-size: 24rpx; color: var(--purple); margin-top: 16rpx; display: inline-block; }
+
+.section {
+  background: linear-gradient(135deg, #1a0a2e, #1f1040);
+  border: 1rpx solid var(--border); border-radius: var(--radius);
+  padding: 24rpx; margin-bottom: 20rpx;
+}
+.sec-hd { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16rpx; }
+.sec-title { font-size: 28rpx; font-weight: 700; color: var(--purple); }
+.sec-count { font-size: 24rpx; color: var(--text-muted); }
+
+.mini-team {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 16rpx 0; border-bottom: 1rpx solid var(--border-light);
+}
+.mini-team:last-child { border-bottom: none; }
+.mt-left { flex: 1; }
+.mt-song { font-size: 28rpx; color: var(--text); display: block; }
+.mt-info { font-size: 22rpx; color: var(--text-muted); }
+.mt-arrow { font-size: 28rpx; color: var(--text-muted); }
+
+.empty-mini { text-align: center; padding: 30rpx 0; color: var(--text-muted); font-size: 24rpx; }
+
+.about-text { font-size: 24rpx; color: var(--text-secondary); display: block; margin-bottom: 4rpx; }

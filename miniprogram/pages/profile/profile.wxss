@@ -1,0 +1,10 @@
+/* 编辑资料 */
+.page { padding: 20rpx; }
+.avatar-picker { display: flex; flex-wrap: wrap; gap: 16rpx; }
+.avatar-opt {
+  font-size: 44rpx; width: 80rpx; height: 80rpx;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 50%; border: 3rpx solid transparent;
+  background: rgba(255,255,255,0.04);
+}
+.avatar-opt.active { border-color: var(--purple); background: rgba(192,132,252,0.15); }

@@ -1,0 +1,31 @@
+<!-- 编辑资料 -->
+<view class="page">
+  <view class="form-card">
+    <text class="form-title">✏️ 编辑资料</text>
+    <text class="form-sub">完善信息，让搭子更了解你</text>
+
+    <view class="form-group">
+      <text class="form-label">🎭 头像</text>
+      <view class="avatar-picker">
+        <view class="avatar-opt {{profile.avatar === item ? 'active' : ''}}" wx:for="{{avatars}}" wx:key="*this" bindtap="pickAvatar" data-avatar="{{item}}">{{item}}</view>
+      </view>
+    </view>
+
+    <view class="form-group">
+      <text class="form-label">👤 昵称</text>
+      <input class="form-input" value="{{profile.nickname}}" bindinput="onInput" data-field="nickname"/>
+    </view>
+
+    <view class="form-group">
+      <text class="form-label">💬 微信</text>
+      <input class="form-input" placeholder="方便搭子联系你" value="{{profile.wechat}}" bindinput="onInput" data-field="wechat"/>
+    </view>
+
+    <view class="form-group">
+      <text class="form-label">📝 简介</text>
+      <textarea class="form-textarea" placeholder="自我介绍、擅长风格、喜欢的团..." value="{{profile.bio}}" bindinput="onInput" data-field="bio"/>
+    </view>
+
+    <button class="btn btn-primary btn-block" bindtap="save">💾 保存</button>
+  </view>
+</view>
