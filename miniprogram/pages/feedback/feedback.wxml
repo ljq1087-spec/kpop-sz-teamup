@@ -1,0 +1,46 @@
+<!-- 反馈意见 -->
+<view class="page">
+  <view class="form-card">
+    <text class="form-title">💬 反馈意见</text>
+    <text class="form-sub">你的每一个建议都会让这个平台更好</text>
+
+    <!-- 反馈类型 -->
+    <view class="form-group">
+      <text class="form-label">📂 反馈类型 <text class="required">*</text></text>
+      <view class="type-grid">
+        <view class="type-opt {{type === item.key ? 'active' : ''}}" wx:for="{{types}}" wx:key="key" bindtap="pickType" data-key="{{item.key}}">
+          <text class="to-emoji">{{item.emoji}}</text>
+          <text class="to-name">{{item.name}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 反馈内容 -->
+    <view class="form-group">
+      <text class="form-label">📝 反馈内容 <text class="required">*</text></text>
+      <textarea class="form-textarea" placeholder="详细描述你的建议或遇到的问题..." value="{{content}}" bindinput="onContentInput" maxlength="500"/>
+      <text class="char-count">{{content.length}}/500</text>
+    </view>
+
+    <!-- 联系方式 -->
+    <view class="form-group">
+      <text class="form-label">📱 联系方式（选填）</text>
+      <input class="form-input" placeholder="微信/手机号，方便我们回复你" value="{{contact}}" bindinput="onContactInput"/>
+    </view>
+
+    <button class="btn btn-primary btn-block" bindtap="submit" loading="{{submitting}}">📤 提交反馈</button>
+  </view>
+
+  <!-- 历史反馈 -->
+  <view class="history-card" wx:if="{{history.length > 0}}">
+    <text class="hc-title">📋 我的反馈记录</text>
+    <view class="hc-item" wx:for="{{history}}" wx:key="id">
+      <view class="hc-head">
+        <text class="hc-type">{{item.typeName}}</text>
+        <text class="hc-status hc-{{item.status}}">{{item.status === 'pending' ? '⏳ 处理中' : '✅ 已回复'}}</text>
+      </view>
+      <text class="hc-content">{{item.content}}</text>
+      <text class="hc-time">{{item.created_at}}</text>
+    </view>
+  </view>
+</view>

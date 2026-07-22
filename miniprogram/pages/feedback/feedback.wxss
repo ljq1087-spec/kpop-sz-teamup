@@ -1,0 +1,56 @@
+/* 反馈页面 */
+.page { padding: 20rpx; }
+
+.form-card {
+  background: linear-gradient(135deg, #1a0a2e, #1f1040);
+  border: 1rpx solid var(--border); border-radius: 20rpx;
+  padding: 28rpx 24rpx; margin-bottom: 20rpx;
+}
+.form-title { font-size: 36rpx; font-weight: 700; color: var(--text); display: block; margin-bottom: 8rpx; }
+.form-sub { font-size: 24rpx; color: var(--text-secondary); display: block; margin-bottom: 28rpx; }
+
+.form-group { margin-bottom: 28rpx; }
+.form-label { font-size: 26rpx; color: var(--purple); font-weight: 600; display: block; margin-bottom: 12rpx; }
+.required { color: var(--red); }
+
+.type-grid { display: flex; flex-wrap: wrap; gap: 12rpx; }
+.type-opt {
+  flex: 1; min-width: 140rpx; text-align: center; padding: 20rpx 12rpx;
+  border-radius: var(--radius-sm); background: rgba(255,255,255,0.04);
+  border: 1rpx solid var(--border);
+}
+.type-opt.active { background: rgba(192,132,252,0.2); border-color: rgba(192,132,252,0.4); }
+.to-emoji { font-size: 36rpx; display: block; margin-bottom: 6rpx; }
+.to-name { font-size: 24rpx; color: var(--text-secondary); }
+.type-opt.active .to-name { color: var(--purple-light); }
+
+.form-textarea {
+  width: 100%; background: rgba(255,255,255,0.04);
+  border: 1rpx solid rgba(192,132,252,0.15); border-radius: var(--radius-sm);
+  padding: 20rpx 24rpx; font-size: 28rpx; color: var(--text);
+  min-height: 200rpx; box-sizing: border-box;
+}
+.char-count { font-size: 22rpx; color: var(--text-muted); text-align: right; display: block; margin-top: 6rpx; }
+
+.form-input {
+  width: 100%; background: rgba(255,255,255,0.04);
+  border: 1rpx solid rgba(192,132,252,0.15); border-radius: var(--radius-sm);
+  padding: 20rpx 24rpx; font-size: 28rpx; color: var(--text); box-sizing: border-box;
+}
+
+/* 历史反馈 */
+.history-card {
+  background: linear-gradient(135deg, #1a0a2e, #1f1040);
+  border: 1rpx solid var(--border); border-radius: var(--radius);
+  padding: 24rpx;
+}
+.hc-title { font-size: 28rpx; font-weight: 700; color: var(--purple); display: block; margin-bottom: 16rpx; }
+.hc-item { padding: 16rpx 0; border-bottom: 1rpx solid var(--border-light); }
+.hc-item:last-child { border-bottom: none; }
+.hc-head { display: flex; justify-content: space-between; margin-bottom: 8rpx; }
+.hc-type { font-size: 22rpx; color: var(--purple); padding: 4rpx 14rpx; background: rgba(192,132,252,0.12); border-radius: 60rpx; }
+.hc-status { font-size: 20rpx; padding: 4rpx 14rpx; border-radius: 60rpx; }
+.hc-pending { background: rgba(250,204,21,0.15); color: var(--yellow); }
+.hc-replied { background: rgba(52,211,153,0.15); color: var(--green); }
+.hc-content { font-size: 26rpx; color: var(--text); display: block; margin-bottom: 6rpx; }
+.hc-time { font-size: 22rpx; color: var(--text-muted); }

@@ -24,5 +24,9 @@ Page({
 
   goDetail(e) {
     wx.navigateTo({ url: `/pages/detail/detail?id=${e.currentTarget.dataset.id}` })
+  },
+
+  goFeedback() {
+    wx.navigateTo({ url: '/pages/feedback/feedback' })
   }
 })

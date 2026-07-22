@@ -73,10 +73,19 @@
     </view>
   </view>
 
+  <!-- 功能入口 -->
+  <view class="section">
+    <view class="func-item" bindtap="goFeedback">
+      <text>💬 反馈意见</text>
+      <text class="func-arrow">→</text>
+    </view>
+  </view>
+
   <!-- 关于 -->
   <view class="section" style="margin-bottom:40rpx;">
     <text class="sec-title">ℹ️ 关于</text>
-    <text class="about-text">🎵 KPOP深圳组队 v2.2</text>
+    <text class="about-text">🎵 KPOP深圳组队 v3.0</text>
     <text class="about-text">帮助深圳 Kpop 舞者快速找到路演搭子</text>
+    <text class="about-text">🚧 持续更新中，欢迎反馈</text>
   </view>
 </view>

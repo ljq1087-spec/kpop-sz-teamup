@@ -1,5 +1,5 @@
 /* 组队详情 */
-.page { padding: 20rpx 24rpx; padding-bottom: 300rpx; }
+.page { padding: 20rpx 24rpx; padding-bottom: 320rpx; }
 
 .dt-head {
   background: linear-gradient(135deg, #1a0a2e, #2d1050);
@@ -8,11 +8,11 @@
 }
 .dt-status { font-size: 22rpx; padding: 6rpx 20rpx; border-radius: 60rpx; background: rgba(244,114,182,0.15); color: var(--pink); display: inline-block; margin-bottom: 16rpx; }
 .dt-status.done { background: rgba(52,211,153,0.15); color: var(--green); }
-.dt-type { font-size: 24rpx; color: var(--text-secondary); }
-.dt-song { font-size: 40rpx; font-weight: 800; color: var(--text); display: block; margin: 10rpx 0; }
+.dt-status.cancelled { background: rgba(248,113,113,0.15); color: var(--red); }
+.dt-type { font-size: 24rpx; color: var(--text-secondary); display: block; margin-bottom: 8rpx; }
+.dt-song { font-size: 40rpx; font-weight: 800; color: var(--text); display: block; margin: 8rpx 0; }
 .dt-creator { font-size: 24rpx; color: var(--text-muted); }
 
-/* 审核 Banner */
 .audit-banner { padding: 20rpx 24rpx; border-radius: var(--radius); margin-bottom: 20rpx; }
 .ban-none { background: rgba(52,211,153,0.1); border: 1rpx solid rgba(52,211,153,0.2); }
 .ban-light { background: rgba(96,165,250,0.1); border: 1rpx solid rgba(96,165,250,0.2); }
@@ -22,19 +22,30 @@
 .ab-title { font-size: 26rpx; font-weight: 600; color: var(--text); display: block; margin-bottom: 6rpx; }
 .ab-desc { font-size: 22rpx; color: var(--text-secondary); }
 
-/* 通用 section */
 .section {
   background: linear-gradient(135deg, #1a0a2e, #1f1040);
   border: 1rpx solid var(--border); border-radius: var(--radius);
   padding: 24rpx; margin-bottom: 20rpx;
 }
 .sec-title { font-size: 26rpx; font-weight: 700; color: var(--purple); display: block; margin-bottom: 14rpx; }
-.sec-text { font-size: 28rpx; color: var(--text); display: block; }
-.sec-sub { font-size: 24rpx; color: var(--text-secondary); margin-top: 6rpx; }
-.wx-note { font-size: 22rpx; color: var(--text-muted); margin-bottom: 12rpx; display: block; }
 
 .pos-tags { display: flex; flex-wrap: wrap; gap: 10rpx; }
 .pos-tag { padding: 10rpx 22rpx; border-radius: 60rpx; font-size: 26rpx; background: rgba(192,132,252,0.15); color: var(--purple-light); }
+.pos-empty { font-size: 24rpx; color: var(--text-muted); }
+
+/* 完整信息块 */
+.info-block { margin-bottom: 14rpx; }
+.info-block:last-child { margin-bottom: 0; }
+.ib-label { font-size: 24rpx; color: var(--text-muted); display: block; }
+.ib-value { font-size: 28rpx; color: var(--text); font-weight: 500; }
+
+.loc-list { display: flex; flex-wrap: wrap; gap: 8rpx; margin-bottom: 8rpx; }
+.loc-item { font-size: 26rpx; color: var(--text); }
+.loc-note { font-size: 24rpx; color: var(--text-secondary); margin-top: 8rpx; display: block; }
+.notes-full { font-size: 26rpx; color: var(--text); white-space: pre-wrap; line-height: 1.8; }
+
+/* 隐私提示 */
+.privacy-hint { font-size: 22rpx; color: var(--text-muted); margin-bottom: 12rpx; display: block; }
 
 /* 成员 */
 .member-item {
@@ -52,20 +63,40 @@
 .m-info { flex: 1; }
 .m-name { font-size: 28rpx; color: var(--text); display: block; }
 .m-part { font-size: 22rpx; color: var(--text-secondary); }
-.m-wx { font-size: 22rpx; color: var(--green); margin-top: 2rpx; }
+.m-wx { font-size: 22rpx; color: var(--green); margin-top: 4rpx; display: block; }
+.m-bio { font-size: 22rpx; color: var(--text-secondary); margin-top: 4rpx; display: block; }
 .m-tag { font-size: 20rpx; padding: 4rpx 16rpx; border-radius: 60rpx; background: rgba(192,132,252,0.15); color: var(--purple); }
+.m-manage { padding: 8rpx 12rpx; font-size: 28rpx; }
 
 .progress-text { font-size: 22rpx; color: var(--text-muted); }
+
+/* 找替 */
+.sub-item { padding: 16rpx 0; border-bottom: 1rpx solid var(--border-light); }
+.sub-item:last-child { border-bottom: none; }
+.sub-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8rpx; }
+.sub-part { font-size: 26rpx; color: var(--text); font-weight: 600; }
+.sub-status { font-size: 20rpx; padding: 4rpx 14rpx; border-radius: 60rpx; }
+.sub-open { background: rgba(250,204,21,0.15); color: var(--yellow); }
+.sub-confirmed { background: rgba(52,211,153,0.15); color: var(--green); }
+.sub-closed { background: rgba(107,94,128,0.15); color: var(--text-muted); }
+.sub-note { font-size: 24rpx; color: var(--text-secondary); display: block; margin-bottom: 12rpx; }
+.sub-actions { margin-top: 8rpx; }
+.sub-apps { margin-top: 12rpx; padding: 12rpx; background: rgba(255,255,255,0.03); border-radius: var(--radius-sm); }
+.sa-title { font-size: 22rpx; color: var(--text-muted); display: block; margin-bottom: 8rpx; }
+.sa-item { display: flex; align-items: center; justify-content: space-between; padding: 8rpx 0; font-size: 24rpx; color: var(--text); }
 
 /* 申请列表 */
 .app-item { padding: 20rpx 0; border-bottom: 1rpx solid var(--border-light); }
 .app-item:last-child { border-bottom: none; }
-.app-head { display: flex; align-items: center; margin-bottom: 16rpx; }
+.app-head { display: flex; align-items: flex-start; margin-bottom: 16rpx; }
 .app-video {
   display: flex; align-items: center; gap: 10rpx; padding: 16rpx 20rpx;
-  border-radius: var(--radius-sm); background: rgba(255,255,255,0.03); margin-bottom: 16rpx;
+  border-radius: var(--radius-sm); background: rgba(255,255,255,0.03); margin-bottom: 12rpx;
   font-size: 24rpx; color: var(--purple-light);
 }
+.app-msg { padding: 12rpx 16rpx; background: rgba(192,132,252,0.06); border-radius: var(--radius-sm); margin-bottom: 12rpx; }
+.am-label { font-size: 22rpx; color: var(--purple); }
+.am-text { font-size: 24rpx; color: var(--text); font-style: italic; }
 .app-acts { display: flex; justify-content: flex-end; gap: 12rpx; }
 
 /* 底部操作栏 */
@@ -79,6 +110,7 @@
   flex: 1; background: rgba(255,255,255,0.05);
   border: 1rpx solid rgba(192,132,252,0.2); border-radius: 60rpx;
   padding: 20rpx 28rpx; font-size: 28rpx; color: var(--text);
+  margin-bottom: 12rpx;
 }
 
 .apply-wrap { margin-bottom: 12rpx; }
@@ -92,7 +124,7 @@
 .opt.active { background: rgba(192,132,252,0.2); color: var(--purple-light); border-color: rgba(192,132,252,0.4); }
 .upload-box {
   padding: 30rpx 20rpx; border-radius: var(--radius-sm); text-align: center;
-  font-size: 24rpx; color: var(--text-muted); margin-bottom: 16rpx;
+  font-size: 24rpx; color: var(--text-muted); margin-bottom: 12rpx;
   border: 2rpx dashed rgba(192,132,252,0.2); background: rgba(255,255,255,0.02);
 }
 .upload-box.done { border-color: var(--green); color: var(--green); }
@@ -107,6 +139,6 @@
 }
 
 .joined-row, .creator-row {
-  display: flex; align-items: center; justify-content: center; gap: 24rpx;
+  display: flex; align-items: center; justify-content: center; gap: 16rpx; flex-wrap: wrap;
 }
 .joined-text { font-size: 28rpx; color: var(--green); font-weight: 600; }

@@ -1,15 +1,16 @@
 const api = require('../../utils/api')
-const { COMBO_TYPES, HOT_COMBOS, AUDIT, LOCATIONS } = api.CONSTANTS
+const { HOT_COMBOS, AUDIT, LOCATIONS } = api.CONSTANTS
 
 Page({
   data: {
     teams: [],
-    filteredTeams: [],
     keyword: '',
     currentType: '',
     currentCombo: '',
     hotCombos: [],
-    loading: true
+    loading: true,
+    auditEmoji: Object.fromEntries(Object.entries(AUDIT).map(([k, v]) => [k, v.emoji])),
+    auditName: Object.fromEntries(Object.entries(AUDIT).map(([k, v]) => [k, v.name]))
   },
 
   onLoad() { this.loadTeams() },
@@ -24,13 +25,17 @@ Page({
       if (this.data.currentCombo) params.combo = this.data.currentCombo
       if (this.data.keyword) params.keyword = this.data.keyword
       const res = await api.getTeams(params)
-      this.setData({ teams: res.teams || [], filteredTeams: res.teams || [], loading: false })
+      // 为每个 team 生成 locationText
+      const teams = (res.teams || []).map(t => ({
+        ...t,
+        locationText: (t.locations || []).map(l => (LOCATIONS[l] || {}).name || l).join(' / ') || '未设置'
+      }))
+      this.setData({ teams, loading: false })
     } catch (e) {
       this.setData({ loading: false })
     }
   },
 
-  // 筛选方法
   onSearchInput(e) { this.setData({ keyword: e.detail.value }) },
   onSearch() { this.loadTeams() },
   clearSearch() { this.setData({ keyword: '' }); this.loadTeams() },
@@ -39,8 +44,7 @@ Page({
     const type = e.currentTarget.dataset.type
     const newType = type === this.data.currentType ? '' : type
     this.setData({
-      currentType: newType,
-      currentCombo: '',
+      currentType: newType, currentCombo: '',
       hotCombos: newType ? (HOT_COMBOS[newType] || []) : []
     })
     this.loadTeams()
@@ -52,16 +56,6 @@ Page({
     this.loadTeams()
   },
 
-  // 辅助方法
-  locationName(key) { return (LOCATIONS[key] || {}).name || key },
-  auditEmoji(key) { return (AUDIT[key] || {}).emoji || '' },
-  auditName(key) { return (AUDIT[key] || {}).name || '' },
-
-  goDetail(e) {
-    wx.navigateTo({ url: `/pages/detail/detail?id=${e.currentTarget.dataset.id}` })
-  },
-
-  goPublish() {
-    wx.navigateTo({ url: '/pages/publish/publish' })
-  }
+  goDetail(e) { wx.navigateTo({ url: `/pages/detail/detail?id=${e.currentTarget.dataset.id}` }) },
+  goPublish() { wx.navigateTo({ url: '/pages/publish/publish' }) }
 })

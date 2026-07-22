@@ -62,15 +62,17 @@
       <input class="form-input" placeholder="如：8月8日、周日下午" value="{{performance}}" bindinput="onInput" data-field="performance"/>
     </view>
 
-    <!-- 地点 -->
+    <!-- 地点（多选） -->
     <view class="form-group">
       <text class="form-label">📍 排练地点 <text class="required">*</text></text>
-      <view class="opt-row">
-        <view class="opt {{location === 'civic' ? 'active' : ''}}" bindtap="setLocation" data-loc="civic">🏛️ 市民中心</view>
-        <view class="opt {{location === 'studio' ? 'active' : ''}}" bindtap="setLocation" data-loc="studio">🪩 自助舞室</view>
-        <view class="opt {{location === 'community' ? 'active' : ''}}" bindtap="setLocation" data-loc="community">🏢 党群中心</view>
+      <text class="form-hint">可多选，勾选「排练地点可协商」表示地点待定</text>
+      <view class="loc-opts">
+        <view class="loc-opt {{locations.includes('civic') ? 'active' : ''}}" bindtap="toggleLocation" data-loc="civic">🏛️ 市民中心</view>
+        <view class="loc-opt {{locations.includes('studio') ? 'active' : ''}}" bindtap="toggleLocation" data-loc="studio">🪩 自助舞室</view>
+        <view class="loc-opt {{locations.includes('community') ? 'active' : ''}}" bindtap="toggleLocation" data-loc="community">🏢 党群中心</view>
+        <view class="loc-opt {{locations.includes('negotiable') ? 'active' : ''}}" bindtap="toggleLocation" data-loc="negotiable">🤝 排练地点可协商</view>
       </view>
-      <input class="form-input" wx:if="{{location === 'studio' || location === 'community'}}" style="margin-top: 14rpx;" placeholder="请填写具体位置，或注明可协商" value="{{locationNote}}" bindinput="onInput" data-field="locationNote"/>
+      <input class="form-input" wx:if="{{locations.includes('studio') || locations.includes('community') || locations.includes('negotiable')}}" style="margin-top: 14rpx;" placeholder="补充具体位置，或注明可协商" value="{{locationNote}}" bindinput="onInput" data-field="locationNote"/>
     </view>
 
     <!-- 人数 -->
@@ -96,10 +98,14 @@
       <view class="audit-desc">{{auditDesc}}</view>
     </view>
 
-    <!-- 备注 -->
+    <!-- 备注（带提示） -->
     <view class="form-group">
       <text class="form-label">📝 备注</text>
-      <textarea class="form-textarea" placeholder="补充说明，如：成品位、急急急、会跳的来..." value="{{notes}}" bindinput="onInput" data-field="notes"/>
+      <view class="note-hints">
+        <text class="nh-title">💡 建议填写以下信息：</text>
+        <text class="nh-item" wx:for="{{noteHints}}" wx:key="*this">{{item}}</text>
+      </view>
+      <textarea class="form-textarea" placeholder="参考上方提示填写备注..." value="{{notes}}" bindinput="onInput" data-field="notes"/>
     </view>
 
     <!-- 提交 -->

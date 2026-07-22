@@ -1,13 +1,11 @@
 <!-- 组队广场 -->
 <view class="page">
-  <!-- Banner -->
   <view class="hero">
     <text class="hero-title">🎵 深圳 Kpop 路演组队</text>
     <text class="hero-sub">找到你的路演搭子，一起上舞台！</text>
     <view class="hero-stat"><text class="stat-num">{{teams.length}}</text><text class="stat-label">组队中</text></view>
   </view>
 
-  <!-- 搜索 -->
   <view class="search-bar">
     <view class="search-wrap">
       <text>🔍</text>
@@ -16,7 +14,6 @@
     </view>
   </view>
 
-  <!-- 类型筛选 -->
   <view class="filter-section">
     <view class="type-row">
       <view class="type-tag {{currentType === '' ? 'active' : ''}}" bindtap="setType" data-type="">全部</view>
@@ -24,20 +21,16 @@
       <view class="type-tag {{currentType === 'girl' ? 'active' : ''}}" bindtap="setType" data-type="girl">💃 女团</view>
       <view class="type-tag {{currentType === 'mixed' ? 'active' : ''}}" bindtap="setType" data-type="mixed">👫 混合</view>
     </view>
-    <!-- 组合筛选 -->
     <scroll-view class="combo-row" scroll-x="true" show-scrollbar="{{false}}" wx:if="{{currentType && hotCombos.length > 0}}">
       <view class="combo-tag {{currentCombo === '' ? 'active' : ''}}" bindtap="setCombo" data-combo="">全部组合</view>
       <view class="combo-tag {{currentCombo === item ? 'active' : ''}}" wx:for="{{hotCombos}}" wx:key="*this" bindtap="setCombo" data-combo="{{item}}">{{item}}</view>
     </scroll-view>
   </view>
 
-  <!-- 组队列表 -->
-  <view class="team-list" wx:if="{{filteredTeams.length > 0}}">
-    <view class="team-card" wx:for="{{filteredTeams}}" wx:key="id" bindtap="goDetail" data-id="{{item.id}}">
+  <view class="team-list" wx:if="{{teams.length > 0}}">
+    <view class="team-card" wx:for="{{teams}}" wx:key="id" bindtap="goDetail" data-id="{{item.id}}">
       <view class="joined-badge" wx:if="{{item.has_joined}}">✅ 已上车</view>
-      <view class="card-status {{item.status === 'completed' ? 'done' : ''}}">
-        {{item.status === 'completed' ? '✅ 已完队' : (item.status === 'cancelled' ? '❌ 已取消' : '🔥 组队中')}}
-      </view>
+      <view class="card-status">{{item.status === 'completed' ? '✅ 已完队' : '🔥 组队中'}}</view>
       <view class="card-song">
         <text class="combo-badge">{{item.combo_type === 'boy' ? '🕺' : (item.combo_type === 'mixed' ? '👫' : '💃')}} {{item.combo_name}}</text>
         <text class="song-name">{{item.song_name}}</text>
@@ -48,7 +41,7 @@
       <view class="card-info">
         <view class="info-row">📅 排练：{{item.rehearsal_time}}</view>
         <view class="info-row">🎬 路演：{{item.performance_time}}</view>
-        <view class="info-row">📍 {{locationName(item.location)}}{{item.location_note ? '（' + item.location_note + '）' : ''}}</view>
+        <view class="info-row">📍 {{item.locationText}}</view>
       </view>
       <view class="card-footer">
         <view class="footer-left">
@@ -59,18 +52,16 @@
           </view>
           <text class="member-count">{{item.member_count}}/{{item.max_members}}人</text>
         </view>
-        <view class="audit-badge audit-{{item.audit_level}}">{{auditEmoji(item.audit_level)}} {{auditName(item.audit_level)}}</view>
+        <view class="audit-badge audit-{{item.audit_level}}">{{auditEmoji[item.audit_level]}} {{auditName[item.audit_level]}}</view>
       </view>
     </view>
   </view>
 
-  <!-- 空状态 -->
-  <view class="empty-state" wx:if="{{filteredTeams.length === 0 && !loading}}">
+  <view class="empty-state" wx:if="{{teams.length === 0 && !loading}}">
     <text class="empty-icon">🎵</text>
     <text class="empty-text">没有找到符合条件的组队</text>
     <text class="empty-sub">换个条件，或发布第一个吧！</text>
   </view>
 
-  <!-- 发布按钮 -->
   <view class="fab" bindtap="goPublish">+</view>
 </view>

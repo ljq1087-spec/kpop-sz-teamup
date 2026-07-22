@@ -4,7 +4,8 @@
     "pages/publish/publish",
     "pages/detail/detail",
     "pages/mine/mine",
-    "pages/profile/profile"
+    "pages/profile/profile",
+    "pages/feedback/feedback"
   ],
   "window": {
     "backgroundTextStyle": "dark",
