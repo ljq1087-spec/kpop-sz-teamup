@@ -2,414 +2,1373 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>KPOP深圳组队</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🎵 深圳KPOP路演组队 - 预览 v3.0</title>
 <style>
-  :root {
-    --bg: #0d0d1a;
-    --bg-card: #1a0a2e;
-    --purple: #c084fc;
-    --purple-light: #e0b0ff;
-    --pink: #f472b6;
-    --pink-light: #f9a8d4;
-    --green: #34d399;
-    --text: #f0e6ff;
-    --text-secondary: #a094b8;
-    --text-muted: #6b5e80;
-    --border: #2d1b4e;
-    --danger: #f87171;
-    --radius: 16px;
-    --shadow: 0 4px 24px rgba(192, 132, 252, 0.1);
-  }
-  * { margin: 0; padding: 0; box-sizing: border-box; }
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
   body {
     font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    font-size: 14px;
-    line-height: 1.6;
-    max-width: 430px;
-    margin: 0 auto;
+    background: #0a0a14;
+    background-image: radial-gradient(circle at 20% 10%, rgba(192,132,252,0.12), transparent 40%),
+                      radial-gradient(circle at 80% 90%, rgba(244,114,182,0.1), transparent 40%);
     min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 24px 12px 60px;
+    color: #f0e6ff;
   }
+  .page-head { text-align: center; margin-bottom: 20px; }
+  .page-head h1 { font-size: 22px; color: #f0e6ff; margin-bottom: 6px; }
+  .page-head p { font-size: 13px; color: #a094b8; }
+  .phones { display: flex; gap: 28px; flex-wrap: wrap; justify-content: center; }
 
-  /* ── 顶部 ── */
-  .topbar {
-    background: rgba(13,13,26,0.95);
-    backdrop-filter: blur(10px);
-    padding: 12px 16px;
+  /* 手机框 */
+  .phone {
+    width: 340px;
+    max-width: 92vw;
+    height: 720px;
+    background: #0d0d1a;
+    border-radius: 40px;
+    border: 10px solid #1a1a26;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 0 0 2px rgba(192,132,252,0.15);
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+  .phone-label {
     text-align: center;
-    font-weight: 700;
-    font-size: 17px;
-    color: var(--purple-light);
-    border-bottom: 1px solid var(--border);
-    position: sticky;
-    top: 0;
-    z-index: 100;
+    font-size: 12px;
+    color: #a094b8;
+    margin-top: 10px;
+    font-weight: 600;
+  }
+  .phone-col { display: flex; flex-direction: column; align-items: center; }
+
+  /* 导航栏 */
+  .navbar {
+    background: #1a0a2e;
+    color: #f0e6ff;
+    text-align: center;
+    padding: 12px 0 10px;
+    font-size: 15px;
+    font-weight: 600;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    border-bottom: 1px solid rgba(192,132,252,0.12);
+  }
+  .navbar .back {
+    position: absolute; left: 14px; font-size: 20px; color: #c084fc; cursor: pointer;
   }
 
-  /* ── Banner ── */
+  /* 内容滚动区 */
+  .screen {
+    flex: 1;
+    overflow-y: auto;
+    padding-bottom: 70px;
+    position: relative;
+  }
+  .screen::-webkit-scrollbar { width: 0; }
+
+  /* 底部 tabbar */
+  .tabbar {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 58px;
+    background: #1a0a2e;
+    border-top: 1px solid rgba(192,132,252,0.12);
+    display: flex;
+  }
+  .tabbar .tab {
+    flex: 1;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    font-size: 11px; color: #8888aa; gap: 3px; cursor: pointer;
+  }
+  .tabbar .tab.active { color: #c084fc; }
+  .tabbar .tab .ico { font-size: 20px; }
+
+  /* ── 通用组件 ── */
   .hero {
-    background: linear-gradient(135deg, #1a0a2e, #2d1050);
-    padding: 24px 20px;
+    background: linear-gradient(135deg, #1a0a2e 0%, #2d1050 50%, #1a0a2e 100%);
+    padding: 18px 16px;
     margin: 12px;
-    border-radius: 20px;
-    border: 1px solid rgba(192, 132, 252, 0.15);
+    border-radius: 16px;
+    border: 1px solid rgba(192,132,252,0.2);
   }
-  .hero h1 { font-size: 22px; font-weight: 700; margin-bottom: 4px; }
-  .hero p { font-size: 13px; color: var(--text-secondary); }
-  .hero-stats { display: flex; gap: 32px; margin-top: 16px; }
-  .hero-stats .num { font-size: 28px; font-weight: 700; color: var(--purple); }
-  .hero-stats .lbl { font-size: 12px; color: var(--text-secondary); }
+  .hero h2 { font-size: 18px; color: #f0e6ff; margin-bottom: 4px; }
+  .hero p { font-size: 12px; color: #a094b8; }
+  .hero .stat { margin-top: 12px; }
+  .hero .stat b { font-size: 22px; color: #c084fc; }
+  .hero .stat span { font-size: 11px; color: #a094b8; margin-left: 4px; }
 
-  /* ── 筛选 ── */
-  .filters { padding: 0 12px; display: flex; gap: 8px; overflow-x: auto; margin-bottom: 12px; }
-  .filters::-webkit-scrollbar { display: none; }
-  .filter-tag {
-    padding: 8px 16px; border-radius: 50px; font-size: 13px; white-space: nowrap;
-    background: rgba(255,255,255,0.04); color: var(--text-secondary);
-    border: 1px solid rgba(192,132,252,0.1); cursor: pointer;
+  .search-bar { padding: 0 12px; margin-bottom: 10px; }
+  .search-wrap {
+    display: flex; align-items: center;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(192,132,252,0.15);
+    border-radius: 30px; padding: 9px 16px;
   }
-  .filter-tag.active { background: rgba(192,132,252,0.2); color: var(--purple-light); border-color: rgba(192,132,252,0.3); }
+  .search-wrap input {
+    flex: 1; border: none; background: transparent; color: #f0e6ff;
+    font-size: 14px; outline: none;
+  }
+  .search-wrap input::placeholder { color: #6b5e80; }
+  .search-wrap .clr { color: #6b5e80; cursor: pointer; padding-left: 6px; }
 
-  /* ── 组队卡片 ── */
-  .team-list { padding: 0 12px 100px; }
-  .team-card {
+  .filter-block { padding: 0 12px; margin-bottom: 10px; }
+  .type-row { display: flex; gap: 8px; margin-bottom: 10px; }
+  .type-tag {
+    flex: 1; text-align: center; padding: 9px 0; border-radius: 12px;
+    font-size: 13px; color: #a094b8;
+    background: rgba(255,255,255,0.04); border: 1px solid rgba(192,132,252,0.1);
+    cursor: pointer; transition: all 0.15s;
+  }
+  .type-tag.active {
+    background: linear-gradient(135deg, rgba(192,132,252,0.35), rgba(244,114,182,0.35));
+    color: #f0e6ff; border-color: rgba(192,132,252,0.5); font-weight: 600;
+  }
+  .combo-row { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 4px; }
+  .combo-row::-webkit-scrollbar { display: none; }
+  .combo-tag {
+    flex-shrink: 0; padding: 6px 14px; border-radius: 30px; font-size: 12px;
+    color: #a094b8; background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(192,132,252,0.1); cursor: pointer; white-space: nowrap;
+  }
+  .combo-tag.active {
+    background: linear-gradient(135deg, rgba(192,132,252,0.3), rgba(244,114,182,0.3));
+    color: #f0e6ff; border-color: rgba(192,132,252,0.4);
+  }
+
+  /* 组队卡片 */
+  .team-list { padding: 0 12px; }
+  .card {
     background: linear-gradient(135deg, #1a0a2e, #1f1040);
-    border: 1px solid rgba(192,132,252,0.1);
-    border-radius: 16px; padding: 20px; margin-bottom: 14px;
+    border: 1px solid rgba(192,132,252,0.12);
+    border-radius: 14px; padding: 15px; margin-bottom: 12px;
     position: relative; cursor: pointer; transition: all 0.15s;
   }
-  .team-card:active { border-color: rgba(192,132,252,0.3); transform: scale(0.99); }
-  .card-status {
-    position: absolute; top: 16px; right: 16px;
-    font-size: 11px; padding: 3px 12px; border-radius: 50px;
-    background: rgba(244,114,182,0.15); color: var(--pink);
+  .card:active { transform: scale(0.99); }
+  .card .status {
+    position: absolute; top: 14px; right: 14px;
+    font-size: 10px; padding: 3px 10px; border-radius: 30px;
+    background: rgba(244,114,182,0.15); color: #f472b6;
   }
-  .card-status.done { background: rgba(52,211,153,0.15); color: var(--green); }
-  .card-song { font-size: 20px; font-weight: 700; margin-bottom: 12px; padding-right: 80px; }
-  .card-positions { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
-  .card-pos {
-    padding: 4px 12px; border-radius: 50px; font-size: 12px;
-    background: rgba(192,132,252,0.12); color: var(--purple-light);
-  }
-  .card-info { margin-bottom: 12px; }
-  .card-info-row { display: flex; align-items: center; gap: 6px; font-size: 13px; color: var(--text-secondary); margin-bottom: 3px; }
-  .card-footer {
-    display: flex; align-items: center; justify-content: space-between;
-    padding-top: 12px; border-top: 1px solid rgba(192,132,252,0.06);
-  }
-  .card-members { display: flex; align-items: center; gap: 8px; }
-  .card-avatars { display: flex; }
-  .card-avatar {
-    width: 32px; height: 32px; border-radius: 50%;
-    background: linear-gradient(135deg, var(--purple), var(--pink));
-    display: flex; align-items: center; justify-content: center;
-    font-size: 13px; color: white; margin-left: -8px;
-    border: 2px solid var(--bg-card);
-  }
-  .card-avatar:first-child { margin-left: 0; }
-  .card-count { font-size: 13px; color: var(--text-secondary); }
-  .card-right { font-size: 12px; color: var(--text-muted); }
-  .joined-badge {
-    position: absolute; top: 16px; left: 16px;
-    font-size: 11px; padding: 3px 10px; border-radius: 50px;
-    background: rgba(52,211,153,0.15); color: var(--green);
-  }
+  .card .status.done { background: rgba(52,211,153,0.15); color:#34d399; }
+  .card .song { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin-bottom: 10px; padding-right: 70px; }
+  .combo-badge { font-size: 11px; padding: 3px 12px; border-radius: 30px; background: rgba(244,114,182,0.15); color: #f472b6; font-weight: 600; }
+  .card .song .name { font-size: 17px; font-weight: 700; color: #f0e6ff; }
+  .card .pos { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }
+  .pos-tag { padding: 4px 12px; border-radius: 30px; font-size: 11px; background: rgba(192,132,252,0.12); color: #c084fc; border: 1px solid rgba(192,132,252,0.2); }
+  .card .info { margin-bottom: 10px; }
+  .card .info .row { font-size: 12px; color: #a094b8; margin-bottom: 4px; display: flex; gap: 6px; }
+  .card .foot { display: flex; align-items: center; justify-content: space-between; padding-top: 10px; border-top: 1px solid rgba(192,132,252,0.08); }
+  .foot .left { display: flex; align-items: center; gap: 8px; }
+  .avatars { display: flex; }
+  .avatars .av { width: 26px; height: 26px; border-radius: 50%; background: linear-gradient(135deg,#c084fc,#f472b6); display: flex; align-items:center; justify-content:center; font-size:12px; color:#fff; border:2px solid #1a0a2e; }
+  .avatars .av:not(:first-child) { margin-left: -9px; }
+  .foot .cnt { font-size: 12px; color: #a094b8; }
+  .audit-badge { font-size: 10px; padding: 3px 10px; border-radius: 30px; }
+  .a-none { background: rgba(52,211,153,0.15); color:#34d399; }
+  .a-light { background: rgba(96,165,250,0.15); color:#60a5fa; }
+  .a-medium { background: rgba(250,204,21,0.15); color:#facc15; }
+  .a-medium_strict { background: rgba(251,146,60,0.15); color:#fb923c; }
+  .a-strict { background: rgba(248,113,113,0.15); color:#f87171; }
+  .joined-flag { position:absolute; top:14px; left:14px; font-size:10px; padding:3px 10px; border-radius:30px; background:rgba(52,211,153,0.15); color:#34d399; }
 
-  /* ── FAB ── */
   .fab {
-    position: fixed; bottom: 24px; right: 24px;
-    width: 56px; height: 56px; border-radius: 50%;
-    background: linear-gradient(135deg, #c084fc, #f472b6);
+    position: absolute; bottom: 74px; right: 16px;
+    width: 52px; height: 52px; border-radius: 50%;
+    background: linear-gradient(135deg,#c084fc,#f472b6);
     display: flex; align-items: center; justify-content: center;
-    font-size: 28px; color: white; cursor: pointer;
-    box-shadow: 0 8px 32px rgba(192,132,252,0.4); z-index: 50;
-    text-decoration: none;
+    font-size: 30px; color: white; box-shadow: 0 6px 20px rgba(192,132,252,0.4);
+    cursor: pointer; z-index: 20;
   }
 
-  /* ── 弹窗 ── */
-  .modal-overlay {
-    position: fixed; inset: 0; background: rgba(0,0,0,0.6);
-    display: flex; align-items: flex-end; z-index: 200; display: none;
+  /* 表单 */
+  .form { padding: 14px; }
+  .fcard { background: linear-gradient(135deg,#1a0a2e,#1f1040); border:1px solid rgba(192,132,252,0.12); border-radius:16px; padding:18px 16px; }
+  .fcard h3 { font-size: 18px; color: #f0e6ff; margin-bottom: 4px; }
+  .fcard .sub { font-size: 12px; color: #a094b8; margin-bottom: 18px; }
+  .fg { margin-bottom: 16px; }
+  .fg label { font-size: 13px; color: #c084fc; font-weight: 600; display: block; margin-bottom: 8px; }
+  .fg .req { color: #f87171; }
+  .fg input, .fg textarea {
+    width: 100%; background: rgba(255,255,255,0.04); border:1px solid rgba(192,132,252,0.15);
+    border-radius: 10px; padding: 11px 14px; font-size: 14px; color: #f0e6ff; outline: none;
+    font-family: inherit;
   }
-  .modal-overlay.show { display: flex; }
-  .modal {
-    background: #1a0a2e; border-radius: 24px 24px 0 0; padding: 24px 20px 40px;
-    width: 100%; max-height: 80vh; overflow-y: auto;
+  .fg input::placeholder, .fg textarea::placeholder { color: #6b5e80; }
+  .fg textarea { min-height: 60px; resize: none; }
+  .opt-row { display: flex; gap: 8px; }
+  .opt {
+    flex: 1; text-align: center; padding: 11px 4px; border-radius: 11px; font-size: 12px;
+    color: #a094b8; background: rgba(255,255,255,0.04); border: 1px solid rgba(192,132,252,0.1); cursor: pointer;
   }
-  .modal h3 { font-size: 18px; color: var(--purple-light); margin-bottom: 16px; }
-  .modal-close {
-    position: absolute; top: 16px; right: 20px;
-    background: none; border: none; color: var(--text-muted); font-size: 24px; cursor: pointer;
-  }
-  .form-group { margin-bottom: 16px; }
-  .form-group label { font-size: 13px; color: var(--purple); font-weight: 600; display: block; margin-bottom: 6px; }
-  .form-group input, .form-group textarea, .form-group select {
-    width: 100%; padding: 12px 14px; border-radius: 10px;
-    background: rgba(255,255,255,0.04); border: 1px solid rgba(192,132,252,0.15);
-    font-size: 14px; color: var(--text); font-family: inherit;
-  }
-  .form-group input:focus { border-color: rgba(192,132,252,0.4); outline: none; }
-  .btn-submit {
-    width: 100%; padding: 14px; border-radius: 50px; border: none;
-    background: linear-gradient(135deg, #c084fc, #f472b6);
-    color: white; font-size: 16px; font-weight: 700; cursor: pointer;
-  }
+  .opt.active { background: linear-gradient(135deg, rgba(192,132,252,0.3), rgba(244,114,182,0.3)); color:#f0e6ff; border-color: rgba(192,132,252,0.45); font-weight:600; }
+  .hot-combos { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 10px; }
+  .hot-combo { padding: 6px 14px; border-radius: 30px; font-size: 12px; color:#a094b8; background: rgba(255,255,255,0.04); border:1px solid rgba(192,132,252,0.1); cursor:pointer; }
+  .hot-combo.active { background: rgba(244,114,182,0.2); color:#f9c0e0; border-color: rgba(244,114,182,0.4); }
   .pos-input-wrap { display: flex; gap: 8px; }
   .pos-input-wrap input { flex: 1; }
-  .pos-add {
-    padding: 12px 16px; border-radius: 10px; background: rgba(192,132,252,0.15);
-    color: var(--purple); font-size: 13px; font-weight: 600; cursor: pointer; white-space: nowrap;
-  }
-  .pos-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
-  .pos-tag {
-    display: flex; align-items: center; gap: 6px; padding: 6px 14px;
-    border-radius: 50px; font-size: 12px; background: rgba(192,132,252,0.15); color: var(--purple-light);
-  }
-  .pos-remove { color: var(--danger); cursor: pointer; font-size: 14px; }
+  .add-btn { background: rgba(192,132,252,0.15); color:#c084fc; padding: 0 18px; border-radius:10px; font-size:13px; font-weight:600; display:flex; align-items:center; cursor:pointer; }
+  .chip-row { display:flex; flex-wrap:wrap; gap:7px; margin-top: 10px; }
+  .chip { display:flex; align-items:center; gap:6px; padding:6px 14px; border-radius:30px; font-size:12px; background:rgba(192,132,252,0.15); color:#e0b0ff; }
+  .chip .x { color:#f87171; cursor:pointer; }
+  .stepper { display:flex; align-items:center; gap:16px; }
+  .step-btn { width:36px; height:36px; border-radius:50%; background:rgba(192,132,252,0.12); color:#c084fc; font-size:22px; display:flex; align-items:center; justify-content:center; cursor:pointer; }
+  .step-val { font-size:20px; font-weight:700; min-width:40px; text-align:center; }
+  .audit-opts { display: flex; flex-wrap: wrap; gap: 7px; }
+  .audit-opt { padding: 8px 14px; border-radius:10px; font-size:12px; color:#a094b8; background:rgba(255,255,255,0.04); border:1px solid rgba(192,132,252,0.12); cursor:pointer; }
+  .audit-opt.active { color:#f0e6ff; font-weight:600; }
+  .audit-opt.on-none.active { background:rgba(52,211,153,0.2); border-color:rgba(52,211,153,0.5); }
+  .audit-opt.on-light.active { background:rgba(96,165,250,0.2); border-color:rgba(96,165,250,0.5); }
+  .audit-opt.on-medium.active { background:rgba(250,204,21,0.2); border-color:rgba(250,204,21,0.5); }
+  .audit-opt.on-medium_strict.active { background:rgba(251,146,60,0.2); border-color:rgba(251,146,60,0.5); }
+  .audit-opt.on-strict.active { background:rgba(248,113,113,0.2); border-color:rgba(248,113,113,0.5); }
+  .audit-desc { margin-top:10px; padding:12px 14px; border-radius:10px; background:rgba(255,255,255,0.03); font-size:12px; color:#a094b8; }
+  .audit-desc .tip { color:#c084fc; display:block; margin-top:6px; font-size:11px; }
+  .submit-btn { width:100%; margin-top:8px; background:linear-gradient(135deg,#c084fc,#f472b6); color:#fff; font-size:15px; font-weight:700; border:none; border-radius:30px; padding:13px; cursor:pointer; }
+  .cancel-link { width:100%; margin-top:10px; background:transparent; color:#a094b8; font-size:13px; border:none; cursor:pointer; }
 
-  /* ── Toast ── */
-  .toast {
-    position: fixed; top: 80px; left: 50%; transform: translateX(-50%);
-    background: #2d1050; color: var(--purple-light); padding: 10px 24px;
-    border-radius: 50px; font-size: 14px; font-weight: 600; z-index: 300;
-    animation: toastIn 0.3s; display: none;
+  /* 多选地点 */
+  .loc-multi { display:flex; flex-wrap:wrap; gap:8px; }
+  .loc-opt { padding:10px 14px; border-radius:11px; font-size:12px; color:#a094b8; background:rgba(255,255,255,0.04); border:1px solid rgba(192,132,252,0.1); cursor:pointer; }
+  .loc-opt.active { background:linear-gradient(135deg, rgba(192,132,252,0.3), rgba(244,114,182,0.3)); color:#f0e6ff; border-color:rgba(192,132,252,0.45); font-weight:600; }
+  .loc-negotiable { margin-top:10px; padding:10px 14px; border-radius:11px; font-size:12px; color:#facc15; background:rgba(250,204,21,0.08); border:1px solid rgba(250,204,21,0.2); cursor:pointer; display:flex; align-items:center; gap:8px; }
+  .loc-negotiable.active { background:rgba(250,204,21,0.15); border-color:rgba(250,204,21,0.5); }
+  .notes-hint { font-size:11px; color:#6b5e80; margin-top:6px; line-height:1.8; }
+  .notes-hint b { color:#c084fc; }
+
+  /* 详情 */
+  .dt-head { background: linear-gradient(135deg,#1a0a2e,#2d1050); border:1px solid rgba(192,132,252,0.15); border-radius:16px; padding:20px; margin:12px; text-align:center; }
+  .dt-head .status { display:inline-block; font-size:11px; padding:4px 14px; border-radius:30px; background:rgba(244,114,182,0.15); color:#f472b6; margin-bottom:12px; }
+  .dt-head .status.done { background:rgba(52,211,153,0.15); color:#34d399; }
+  .dt-head .name-big { font-size:24px; font-weight:800; color:#f0e6ff; margin:8px 0 12px; }
+  .dt-head .creator { font-size:12px; color:#a094b8; }
+  .audit-banner { margin:0 12px 12px; border-radius:14px; padding:14px; }
+  .audit-banner b { font-size:14px; color:#f0e6ff; display:block; margin-bottom:4px; }
+  .audit-banner span { font-size:12px; color:#a094b8; }
+  .ban-none { background:rgba(52,211,153,0.1); border:1px solid rgba(52,211,153,0.3); }
+  .ban-light { background:rgba(96,165,250,0.1); border:1px solid rgba(96,165,250,0.3); }
+  .ban-medium { background:rgba(250,204,21,0.1); border:1px solid rgba(250,204,21,0.3); }
+  .ban-medium_strict { background:rgba(251,146,60,0.1); border:1px solid rgba(251,146,60,0.3); }
+  .ban-strict { background:rgba(248,113,113,0.1); border:1px solid rgba(248,113,113,0.3); }
+  .sec { background: linear-gradient(135deg,#1a0a2e,#1f1040); border:1px solid rgba(192,132,252,0.1); border-radius:14px; padding:15px; margin:0 12px 12px; }
+  .sec h4 { font-size:13px; color:#c084fc; margin-bottom:10px; }
+  .sec .txt { font-size:14px; color:#f0e6ff; }
+  .sec .sub-txt { font-size:12px; color:#a094b8; margin-top:4px; display:block; }
+  .mem { display:flex; align-items:center; padding:8px 0; border-bottom:1px solid rgba(192,132,252,0.06); }
+  .mem:last-child { border-bottom:none; }
+  .mem .mav { width:34px; height:34px; border-radius:50%; background:linear-gradient(135deg,#6b5e80,#4a3a60); display:flex; align-items:center; justify-content:center; font-size:16px; color:#fff; margin-right:12px; cursor:pointer; }
+  .mem .mav.creator { background:linear-gradient(135deg,#c084fc,#f472b6); }
+  .mem .minfo { flex:1; }
+  .mem .minfo .mn { font-size:14px; color:#f0e6ff; display:block; }
+  .mem .minfo .mp { font-size:11px; color:#a094b8; }
+  .mem .minfo .wx { font-size:11px; color:#60a5fa; cursor:pointer; }
+  .mem .minfo .bio-text { font-size:11px; color:#c084fc; font-style:italic; }
+  .mem .mtag { font-size:10px; padding:3px 10px; border-radius:30px; background:rgba(192,132,252,0.15); color:#c084fc; }
+  .mem .gear-btn { font-size:16px; color:#a094b8; cursor:pointer; padding:4px 8px; }
+  .wx-note { font-size:11px; color:#60a5fa; margin-bottom:8px; display:block; }
+  .pbar { height:6px; background:rgba(192,132,252,0.1); border-radius:6px; overflow:hidden; margin:12px 0 6px; }
+  .pfill { height:100%; background:linear-gradient(90deg,#c084fc,#f472b6); }
+  .ptext { font-size:11px; color:#6b5e80; }
+
+  .app-item { background:rgba(255,255,255,0.03); border:1px solid rgba(192,132,252,0.1); border-radius:12px; padding:12px; margin-bottom:10px; }
+  .app-head { display:flex; align-items:center; margin-bottom:10px; }
+  .app-video { display:flex; align-items:center; gap:8px; background:rgba(96,165,250,0.1); border:1px solid rgba(96,165,250,0.25); border-radius:10px; padding:10px 12px; margin-bottom:10px; cursor:pointer; }
+  .app-video .vu { font-size:12px; color:#60a5fa; flex:1; overflow:hidden; white-space:nowrap; text-overflow:ellipsis; }
+  .app-msg { font-size:12px; color:#fbbf24; background:rgba(251,191,36,0.08); border:1px solid rgba(251,191,36,0.2); border-radius:8px; padding:8px 12px; margin-bottom:10px; line-height:1.5; }
+  .app-bio { font-size:11px; color:#c084fc; font-style:italic; margin-bottom:8px; }
+  .app-acts { display:flex; gap:10px; }
+  .app-btn { flex:1; font-size:13px; font-weight:600; border:none; border-radius:30px; padding:9px; cursor:pointer; }
+  .app-btn.ok { background:linear-gradient(135deg,#34d399,#10b981); color:#fff; }
+  .app-btn.no { background:transparent; border:1.5px solid #f87171; color:#f87171; }
+  .app-btn.warn { background:transparent; border:1.5px solid #fbbf24; color:#fbbf24; }
+
+  .actions { position:absolute; bottom:0; left:0; right:0; padding:14px 12px 16px; background:rgba(13,13,26,0.98); border-top:1px solid rgba(192,132,252,0.2); }
+  .act-row { display:flex; gap:10px; align-items:center; }
+  .join-input { flex:1; background:rgba(255,255,255,0.05); border:1px solid rgba(192,132,252,0.2); border-radius:30px; padding:11px 16px; font-size:13px; color:#f0e6ff; outline:none; }
+  .join-input::placeholder { color:#6b5e80; }
+  .join-btn { background:linear-gradient(135deg,#c084fc,#f472b6); color:#fff; font-size:14px; font-weight:700; border:none; border-radius:30px; padding:11px 20px; cursor:pointer; white-space:nowrap; }
+  .apply-wrap { flex-direction:column; align-items:stretch; gap:8px; background:rgba(26,10,46,0.97); border:1px solid rgba(192,132,252,0.2); border-radius:14px; padding:14px; }
+  .apply-wrap .t { font-size:13px; font-weight:700; color:#f0e6ff; }
+  .apply-wrap .hint { font-size:11px; color:#c084fc; }
+  .apply-wrap .join-btn { width:100%; }
+  .upload-box { background:rgba(96,165,250,0.08); border:1.5px dashed rgba(96,165,250,0.4); border-radius:10px; padding:14px; text-align:center; font-size:13px; color:#60a5fa; cursor:pointer; }
+  .upload-box.done { background:rgba(52,211,153,0.1); border-color:rgba(52,211,153,0.4); color:#34d399; }
+  .status-wrap { flex-direction:column; gap:10px; background:rgba(26,10,46,0.97); border-radius:14px; padding:16px; text-align:center; }
+  .status-wrap .pending { font-size:13px; color:#facc15; font-weight:600; }
+  .status-wrap .rejected { font-size:13px; color:#f87171; font-weight:600; }
+  .status-wrap .blocked { font-size:13px; color:#f87171; font-weight:600; }
+  .reject-msg { font-size:12px; color:#fbbf24; background:rgba(251,191,36,0.1); border:1px solid rgba(251,191,36,0.25); border-radius:10px; padding:10px 12px; line-height:1.6; }
+  .joined-row { justify-content:center; gap:16px; }
+  .joined-row .jt { font-size:14px; color:#34d399; font-weight:600; }
+  .leave-btn { background:transparent; border:1.5px solid #f87171; color:#f87171; font-size:12px; border-radius:30px; padding:8px 20px; cursor:pointer; }
+  .substitute-btn { background:transparent; border:1.5px solid #60a5fa; color:#60a5fa; font-size:12px; border-radius:30px; padding:8px 16px; cursor:pointer; }
+  .creator-row { justify-content:center; gap:12px; flex-wrap:wrap; }
+  .complete-btn { background:linear-gradient(135deg,#34d399,#10b981); color:#fff; font-size:13px; font-weight:700; border:none; border-radius:30px; padding:11px 22px; cursor:pointer; }
+  .reopen-btn { background:linear-gradient(135deg,#60a5fa,#3b82f6); color:#fff; font-size:13px; font-weight:700; border:none; border-radius:30px; padding:11px 22px; cursor:pointer; }
+  .cancel-btn { background:transparent; border:1.5px solid #f87171; color:#f87171; font-size:12px; border-radius:30px; padding:10px 22px; cursor:pointer; }
+
+  .empty { text-align:center; padding:50px 20px; color:#6b5e80; }
+  .empty .ei { font-size:44px; display:block; margin-bottom:12px; }
+  .empty .et { font-size:14px; display:block; margin-bottom:4px; color:#a094b8; }
+
+  /* mine */
+  .user-card { background:linear-gradient(135deg,#1a0a2e,#2d1050); border:1px solid rgba(192,132,252,0.15); border-radius:16px; padding:24px; text-align:center; margin:12px; }
+  .user-card .uav { width:64px; height:64px; border-radius:50%; background:linear-gradient(135deg,#c084fc,#f472b6); display:flex; align-items:center; justify-content:center; font-size:30px; margin:0 auto 10px; }
+  .user-card .un { font-size:17px; font-weight:700; color:#f0e6ff; display:block; margin-bottom:4px; }
+  .user-card .uid { font-size:11px; color:#6b5e80; display:block; }
+  .user-card .ubio { font-size:12px; color:#c084fc; margin-top:8px; display:block; line-height:1.6; }
+  .user-card .uwx { font-size:11px; color:#60a5fa; margin-top:6px; display:block; cursor:pointer; }
+  .edit-btn { display:inline-block; margin-top:12px; padding:7px 18px; border-radius:30px; font-size:12px; color:#c084fc; border:1px solid rgba(192,132,252,0.4); cursor:pointer; }
+  .mine-sec { background:linear-gradient(135deg,#1a0a2e,#1f1040); border:1px solid rgba(192,132,252,0.1); border-radius:14px; padding:15px; margin:0 12px 12px; }
+  .mine-sec .sh { display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; }
+  .mine-sec .sh .st { font-size:14px; font-weight:700; color:#c084fc; }
+  .mine-sec .sh .sc { font-size:12px; color:#6b5e80; }
+  .tmini { display:flex; align-items:center; justify-content:space-between; padding:10px 0; border-bottom:1px solid rgba(192,132,252,0.06); cursor:pointer; }
+  .tmini:last-child { border-bottom:none; }
+  .tmini .tl .ts { font-size:14px; color:#f0e6ff; display:block; margin-bottom:2px; }
+  .tmini .tl .ti { font-size:11px; color:#6b5e80; }
+  .tmini .tr { display:flex; align-items:center; gap:8px; }
+  .tmini .tr .pend { font-size:10px; color:#facc15; background:rgba(250,204,21,0.12); padding:3px 9px; border-radius:30px; }
+  .tmini .tr .ss { font-size:18px; }
+  .empty-mini { text-align:center; padding:16px 0; color:#6b5e80; font-size:12px; }
+  .mine-menu-item { display:flex; align-items:center; gap:10px; padding:12px 0; border-bottom:1px solid rgba(192,132,252,0.06); cursor:pointer; font-size:14px; color:#f0e6ff; }
+  .mine-menu-item:last-child { border-bottom:none; }
+  .mine-menu-item .ico { font-size:18px; }
+  .mine-menu-item .arrow { margin-left:auto; color:#6b5e80; }
+
+  /* 头像选择 */
+  .avatar-grid { display:flex; flex-wrap:wrap; gap:10px; }
+  .av-opt { width:44px; height:44px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:22px; background:rgba(255,255,255,0.04); border:1px solid rgba(192,132,252,0.15); cursor:pointer; }
+  .av-opt.active { border-color:#c084fc; box-shadow:0 0 0 2px rgba(192,132,252,0.4); }
+
+  /* 拒绝话术 */
+  .reject-item { display:flex; gap:10px; align-items:flex-start; background:rgba(255,255,255,0.03); border:1px solid rgba(192,132,252,0.1); border-radius:12px; padding:12px; margin-bottom:10px; cursor:pointer; }
+  .reject-item.active { border-color:rgba(251,191,36,0.5); background:rgba(251,191,36,0.06); }
+  .ri-radio { font-size:16px; color:#fbbf24; line-height:1.4; }
+  .ri-text { font-size:13px; color:#f0e6ff; line-height:1.6; }
+
+  /* 找替功能 */
+  .sub-section { background:rgba(96,165,250,0.06); border:1px solid rgba(96,165,250,0.2); border-radius:12px; padding:14px; margin:0 12px 12px; }
+  .sub-section h4 { font-size:13px; color:#60a5fa; margin-bottom:10px; }
+  .sub-post { background:rgba(255,255,255,0.03); border:1px solid rgba(96,165,250,0.15); border-radius:10px; padding:12px; margin-bottom:10px; }
+  .sub-post .sp-head { display:flex; align-items:center; gap:10px; margin-bottom:8px; }
+  .sub-post .sp-info { flex:1; }
+  .sub-post .sp-info .sp-name { font-size:13px; color:#f0e6ff; }
+  .sub-post .sp-info .sp-part { font-size:11px; color:#a094b8; }
+  .sub-post .sp-status { font-size:11px; padding:3px 10px; border-radius:30px; }
+  .sp-status.open { background:rgba(96,165,250,0.15); color:#60a5fa; }
+  .sp-status.matched { background:rgba(52,211,153,0.15); color:#34d399; }
+  .sub-applicant { display:flex; align-items:center; gap:10px; background:rgba(255,255,255,0.03); border-radius:8px; padding:10px; margin-top:8px; }
+  .sub-applicant .sa-info { flex:1; }
+  .sub-applicant .sa-info .sa-name { font-size:12px; color:#f0e6ff; }
+  .sub-applicant .sa-info .sa-bio { font-size:10px; color:#c084fc; font-style:italic; }
+  .sub-applicant .sa-btn { font-size:11px; padding:6px 14px; border-radius:30px; border:none; cursor:pointer; }
+  .sa-btn.confirm { background:linear-gradient(135deg,#34d399,#10b981); color:#fff; }
+
+  /* 成员管理弹窗 */
+  .manage-popup { position:absolute; bottom:0; left:0; right:0; background:rgba(13,13,26,0.99); border-top:2px solid rgba(192,132,252,0.3); border-radius:20px 20px 0 0; padding:20px 16px 24px; z-index:50; }
+  .manage-popup .mp-title { font-size:15px; font-weight:700; color:#f0e6ff; margin-bottom:16px; text-align:center; }
+  .manage-popup .mp-item { display:flex; align-items:center; gap:12px; padding:14px; border-radius:12px; background:rgba(255,255,255,0.04); margin-bottom:10px; cursor:pointer; }
+  .manage-popup .mp-item:active { background:rgba(192,132,252,0.1); }
+  .manage-popup .mp-item .mp-ico { font-size:20px; }
+  .manage-popup .mp-item .mp-text { font-size:14px; color:#f0e6ff; }
+  .manage-popup .mp-item .mp-desc { font-size:11px; color:#a094b8; }
+  .manage-popup .mp-close { width:100%; text-align:center; padding:12px; color:#a094b8; font-size:13px; cursor:pointer; }
+
+  /* 修改位置弹窗 */
+  .pos-edit-popup { position:absolute; bottom:0; left:0; right:0; background:rgba(13,13,26,0.99); border-top:2px solid rgba(192,132,252,0.3); border-radius:20px 20px 0 0; padding:20px 16px 24px; z-index:51; }
+  .pos-edit-popup .pe-title { font-size:15px; font-weight:700; color:#f0e6ff; margin-bottom:16px; text-align:center; }
+  .pos-edit-popup input { width:100%; background:rgba(255,255,255,0.04); border:1px solid rgba(192,132,252,0.15); border-radius:10px; padding:11px 14px; font-size:14px; color:#f0e6ff; outline:none; margin-bottom:12px; }
+  .pos-edit-popup .pe-btns { display:flex; gap:10px; }
+  .pos-edit-popup .pe-btns button { flex:1; border-radius:30px; padding:11px; font-size:13px; font-weight:600; cursor:pointer; border:none; }
+  .pe-btns .pe-save { background:linear-gradient(135deg,#c084fc,#f472b6); color:#fff; }
+  .pe-btns .pe-cancel { background:transparent; border:1.5px solid rgba(192,132,252,0.3); color:#a094b8; }
+
+  /* bio 弹窗 */
+  .bio-popup { position:absolute; bottom:0; left:0; right:0; background:rgba(13,13,26,0.99); border-top:2px solid rgba(192,132,252,0.3); border-radius:20px 20px 0 0; padding:24px 20px 28px; z-index:50; text-align:center; }
+  .bio-popup .bp-av { width:56px; height:56px; border-radius:50%; background:linear-gradient(135deg,#c084fc,#f472b6); display:flex; align-items:center; justify-content:center; font-size:28px; margin:0 auto 12px; }
+  .bio-popup .bp-name { font-size:16px; font-weight:700; color:#f0e6ff; margin-bottom:8px; }
+  .bio-popup .bp-bio { font-size:13px; color:#c084fc; line-height:1.6; margin-bottom:16px; font-style:italic; }
+  .bio-popup .bp-close { width:100%; padding:11px; border-radius:30px; background:rgba(192,132,252,0.15); color:#c084fc; font-size:13px; cursor:pointer; border:none; }
+
+  /* 反馈页面 */
+  .fb-type-row { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:14px; }
+  .fb-type { padding:8px 16px; border-radius:30px; font-size:12px; color:#a094b8; background:rgba(255,255,255,0.04); border:1px solid rgba(192,132,252,0.1); cursor:pointer; }
+  .fb-type.active { background:linear-gradient(135deg, rgba(192,132,252,0.3), rgba(244,114,182,0.3)); color:#f0e6ff; border-color:rgba(192,132,252,0.45); font-weight:600; }
+  .fb-history-item { background:rgba(255,255,255,0.03); border:1px solid rgba(192,132,252,0.08); border-radius:12px; padding:14px; margin-bottom:10px; }
+  .fb-history-item .fh-type { font-size:11px; padding:3px 10px; border-radius:30px; display:inline-block; margin-bottom:8px; }
+  .fb-history-item .fh-content { font-size:13px; color:#f0e6ff; line-height:1.6; margin-bottom:6px; }
+  .fb-history-item .fh-meta { font-size:11px; color:#6b5e80; }
+
+  /* toast */
+  .toast { position:fixed; bottom:40px; left:50%; transform:translateX(-50%); background:rgba(26,10,46,0.96); border:1px solid rgba(192,132,252,0.3); color:#f0e6ff; padding:12px 24px; border-radius:30px; font-size:14px; z-index:9999; opacity:0; transition:opacity 0.2s; pointer-events:none; max-width:80%; text-align:center; }
+  .toast.show { opacity:1; }
+
+  /* 遮罩 */
+  .overlay { position:absolute; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.5); z-index:40; }
+
+  @media (max-width: 760px) {
+    body { padding: 14px 4px 36px; }
+    .phones { flex-direction: column; gap: 18px; }
+    .page-head h1 { font-size: 18px; }
+    .page-head p { font-size: 12px; }
   }
-  .toast.show { display: block; }
-  @keyframes toastIn { from { opacity: 0; transform: translateX(-50%) translateY(-10px); } }
 </style>
 </head>
 <body>
-
-<div class="topbar">🎵 KPOP深圳组队</div>
-
-<div class="hero">
-  <h1>🎵 深圳 Kpop 路演组队</h1>
-  <p>找到你的路演搭子，一起上舞台！</p>
-  <div class="hero-stats">
-    <div><div class="num" id="totalTeams">5</div><div class="lbl">组队中</div></div>
-    <div><div class="num" id="totalMembers">15</div><div class="lbl">舞者在线</div></div>
+  <div class="page-head">
+    <h1>🎵 深圳 KPOP 路演组队 · 优化预览 v3.0</h1>
+    <p>本版：反馈意见、找替功能、隐私保护、成员管理、多选地点、申请人简介、附带留言、拒绝计数、重新开放</p>
   </div>
-</div>
 
-<div class="filters" id="districtFilter">
-  <div class="filter-tag active" data-district="">全部</div>
-  <div class="filter-tag" data-district="南山">南山</div>
-  <div class="filter-tag" data-district="福田">福田</div>
-  <div class="filter-tag" data-district="罗湖">罗湖</div>
-  <div class="filter-tag" data-district="宝安">宝安</div>
-  <div class="filter-tag" data-district="龙华">龙华</div>
-  <div class="filter-tag" data-district="龙岗">龙岗</div>
-</div>
-
-<div class="team-list" id="teamList"></div>
-
-<a class="fab" href="javascript:void(0)" onclick="openPublish()">+</a>
-
-<div class="toast" id="toast"></div>
-
-<!-- 发布弹窗 -->
-<div class="modal-overlay" id="publishModal">
-  <div class="modal">
-    <h3>🎵 发布组队信息</h3>
-    <div class="form-group"><label>🎤 歌曲名 *</label><input id="fSong" placeholder="如：Iconic、Supernova..."></div>
-    <div class="form-group">
-      <label>🎯 缺什么位 *</label>
-      <div class="pos-input-wrap">
-        <input id="fPos" placeholder="如：moka位、jiwoo位">
-        <div class="pos-add" onclick="addPosition()">添加</div>
+  <div class="phones">
+    <div class="phone-col">
+      <div class="phone">
+        <div class="navbar" id="nav">KPOP深圳组队</div>
+        <div class="screen" id="screen"></div>
+        <div class="tabbar" id="tabbar">
+          <div class="tab active" data-tab="home" onclick="switchTab('home')"><span class="ico">🎪</span>组队广场</div>
+          <div class="tab" data-tab="mine" onclick="switchTab('mine')"><span class="ico">👤</span>我的</div>
+        </div>
       </div>
-      <div class="pos-tags" id="posTags"></div>
+      <div class="phone-label">📱 主界面（首页 / 发布 / 我的 / 反馈）</div>
     </div>
-    <div class="form-group"><label>📅 排练时间 *</label><input id="fRehearsal" placeholder="如：8月7日晚"></div>
-    <div class="form-group"><label>🎬 路演时间 *</label><input id="fPerf" placeholder="如：8月8日路演"></div>
-    <div class="form-group"><label>👥 人数上限</label><input id="fMax" type="number" value="5" min="1" max="20"></div>
-    <div class="form-group"><label>💎 上车条件</label><select id="fCondition"><option value="">无</option><option value="上车请喝奶茶">🧋 奶茶</option><option value="上车请V20">💰 V20</option><option value="上车请喝奶茶或V20">🧋+💰</option></select></div>
-    <div class="form-group"><label>📍 深圳区域</label><select id="fDistrict"><option value="">不限</option><option>南山</option><option>福田</option><option>罗湖</option><option>宝安</option><option>龙华</option><option>龙岗</option></select></div>
-    <div class="form-group"><label>📝 备注</label><textarea id="fNotes" rows="2" placeholder="补充说明..."></textarea></div>
-    <button class="btn-submit" onclick="publishTeam()">🚀 发布组队</button>
-    <div style="text-align:center;margin-top:16px;">
-      <span style="color:var(--text-muted);cursor:pointer;font-size:13px;" onclick="closePublish()">取消</span>
+
+    <div class="phone-col">
+      <div class="phone">
+        <div class="navbar" id="nav2"><span class="back" onclick="closeDetail()">‹</span>组队详情</div>
+        <div class="screen" id="screen2"></div>
+      </div>
+      <div class="phone-label">📱 详情 & 申请上车 & 车主审核 & 找替</div>
     </div>
   </div>
-</div>
+
+  <div class="toast" id="toast"></div>
 
 <script>
-// ─── Mock 数据 ───
-let teams = [
-  { id:1, song_name:'Iconic', missing_positions:['moka位','jiwoo位'], rehearsal_time:'8月7日晚', performance_time:'8月8日路演', max_members:5, join_condition:'上车请喝奶茶', notes:'aespa新歌！急急急！', district:'南山', status:'active', member_count:2, members:[{nickname:'小舞',position:'karina位'},{nickname:'阿琳',position:'winter位'}] },
-  { id:2, song_name:'恋爱的条件', missing_positions:['姜位','罗位'], rehearsal_time:'周六下午', performance_time:'周日下午', max_members:5, join_condition:'', notes:'等1人！', district:'福田', status:'active', member_count:4, members:[{nickname:'葡萄'},{nickname:'柠檬'},{nickname:'草莓'},{nickname:'芒果'}] },
-  { id:3, song_name:'WDA', missing_positions:['柳智敏成品位'], rehearsal_time:'7月26日', performance_time:'8月1日路演', max_members:5, join_condition:'上车请喝奶茶或V20', notes:'急急急！', district:'罗湖', status:'active', member_count:3, members:[{nickname:'樱桃'},{nickname:'西瓜'},{nickname:'蜜桃'}] },
-  { id:4, song_name:'Supernova', missing_positions:['winter位','ningning位'], rehearsal_time:'下周三晚', performance_time:'下周六路演', max_members:4, join_condition:'', notes:'会跳的来！', district:'宝安', status:'active', member_count:2, members:[{nickname:'布丁'},{nickname:'奶茶'}] },
-  { id:5, song_name:'Drama', missing_positions:['全员缺1'], rehearsal_time:'这周末', performance_time:'下周末路演', max_members:5, join_condition:'奶茶就行', notes:'随便什么位！', district:'龙华', status:'active', member_count:4, members:[{nickname:'泡芙'},{nickname:'曲奇'},{nickname:'蛋糕'},{nickname:'果冻'}] },
+// ═══════════ 数据 ═══════════
+const COMBO_TYPES = { boy:{name:'男团',emoji:'🕺'}, girl:{name:'女团',emoji:'💃'}, mixed:{name:'男女混合',emoji:'👫'} };
+const HOT_COMBOS = {
+  boy: ['BTS','SEVENTEEN','Stray Kids','ENHYPEN','TXT','ATEEZ','RIIZE','THE BOYZ','NCT DREAM','BOYNEXTDOOR'],
+  girl: ['aespa','BLACKPINK','IVE','NewJeans','LE SSERAFIM','(G)I-DLE','TWICE','ITZY','ILLIT','Red Velvet'],
+  mixed: ['KARD','AKMU','Koyote','Triple H','Sunny Hill','8eight','Coed School',"Roo'Ra"]
+};
+const AUDIT = {
+  none:{name:'无审核',emoji:'🟢',desc:'先到先得，直接上车'},
+  light:{name:'微审',emoji:'🔵',desc:'车主简单看下舞蹈视频即可'},
+  medium:{name:'中审',emoji:'🟡',desc:'车主会认真看舞蹈基础'},
+  medium_strict:{name:'中严审',emoji:'🟠',desc:'要求有一定成品经验'},
+  strict:{name:'严审',emoji:'🔴',desc:'要求成品位 / 高水平舞者'}
+};
+const LOC = { civic:{name:'市民中心'}, studio:{name:'自助舞室'}, community:{name:'党群服务中心'} };
+const LOC_EMOJI = { civic:'🏛️', studio:'🪩', community:'🏢' };
+const AVATARS = ['🦄','🌸','🔥','⭐','🐯','🍓','💜','🎀','🐰','🌟','🍑','🐱'];
+const ME = 'dev_user_001';
+let ME_USER = { openid:ME, nickname:'深圳 Kpop 舞者', avatar:'🦄', wechat:'kpop_sz_001', bio:'男团女团都爱，路演狂热分子🎀' };
+
+// 其他用户资料
+const USERS = {
+  'user_001':{nickname:'小舞',avatar:'🌸',wechat:'xiaowu_dance',bio:'女团博爱粉，最爱aespa'},
+  'user_002':{nickname:'阿琳',avatar:'🍓',wechat:'alin_kpop',bio:'winter位专业户'},
+  'user_003':{nickname:'葡萄',avatar:'🍇',wechat:'putao_sz',bio:'新手友好型车主'},
+  'user_004':{nickname:'柠檬',avatar:'🍋',wechat:'lemon_k',bio:'IVE忠实粉丝'},
+  'user_005':{nickname:'草莓',avatar:'🍓',wechat:'caomei_d',bio:'路演常客'},
+  'user_006':{nickname:'芒果',avatar:'🥭',wechat:'mango_k',bio:'爱跳女团'},
+  'user_007':{nickname:'樱桃',avatar:'🍒',wechat:'yingtao_d',bio:'成品位追求者'},
+  'user_008':{nickname:'西瓜',avatar:'🍉',wechat:'xigua_k',bio:'卡点狂魔'},
+  'user_009':{nickname:'蜜桃',avatar:'🍑',wechat:'mitao_d',bio:'爱跳、肯练'},
+  'user_010':{nickname:'布丁',avatar:'🍮',wechat:'buding_s',bio:'男团舞爱好者'},
+  'user_011':{nickname:'奶茶',avatar:'🧋',wechat:'naicha_k',bio:'SEVENTEEN粉'},
+  'user_012':{nickname:'泡芙',avatar:'🧁',wechat:'puff_k',bio:'SKZ铁粉'},
+  'user_013':{nickname:'曲奇',avatar:'🍪',wechat:'cookie_k',bio:'跳舞上头'},
+  'user_014':{nickname:'蛋糕',avatar:'🍰',wechat:'cake_k',bio:'路演搭子'},
+  'user_015':{nickname:'果冻',avatar:'🍮',wechat:'jd_k',bio:'Felix位'},
+  'user_016':{nickname:'布朗尼',avatar:'🟤',wechat:'brownie_k',bio:'Seungmin位'},
+  'user_017':{nickname:'甜甜圈',avatar:'🍩',wechat:'donut_k',bio:'爱跳男团'},
+  'user_019':{nickname:'拿铁',avatar:'☕',wechat:'latte_k',bio:'KARD混团粉'},
+  'user_100':{nickname:'跳跳糖',avatar:'🍬',wechat:'tiaotang_sz',bio:'想上aespa车，练了三个月'},
+  'user_200':{nickname:'月光',avatar:'🌙',wechat:'moonlight_k',bio:'KARD BM位，混团老手'}
+};
+function getUser(openid){
+  if(openid===ME) return ME_USER;
+  if(USERS[openid]) return USERS[openid];
+  return { openid, nickname:openid, avatar:'🙂', wechat:'wx_'+openid.replace(/[^a-z0-9]/gi,''), bio:'' };
+}
+
+// 拒绝话术
+const REJECT_PRESETS = [
+  { key:'full', label:'坑位已满', msg:'这次坑位刚好满啦，但你的视频真的超棒！下次有空缺我第一时间喊你🙌' },
+  { key:'familiar', label:'想要熟脸', msg:'感觉你基础很棒！不过这版更想要熟脸搭子，先关注你啦，下次优先找你🌟' }
 ];
-let posList = [];
-let currentDistrict = '';
 
-function render() {
-  let filtered = teams.filter(t => t.status === 'active');
-  if (currentDistrict) filtered = filtered.filter(t => t.district === currentDistrict);
-  
-  const totalMembers = filtered.reduce((s,t) => s + t.member_count, 0);
-  document.getElementById('totalTeams').textContent = filtered.length;
-  document.getElementById('totalMembers').textContent = totalMembers;
+// 反馈类型
+const FB_TYPES = { bug:{name:'Bug',emoji:'🐛',color:'#f87171'}, feature:{name:'功能建议',emoji:'💡',color:'#60a5fa'}, complaint:{name:'投诉',emoji:'😤',color:'#fbbf24'}, other:{name:'其他',emoji:'📝',color:'#c084fc'} };
 
-  let html = '';
-  filtered.forEach(t => {
-    const avatars = t.members.map(m => `<div class="card-avatar">${m.nickname?m.nickname[0]:'👤'}</div>`).join('');
-    const positions = t.missing_positions.map(p => `<span class="card-pos">🎯 ${p}</span>`).join('');
-    html += `
-      <div class="team-card" onclick="showDetail(${t.id})">
-        <div class="card-status">🔥 组队中</div>
-        <div class="card-song">🎤 ${t.song_name}</div>
-        <div class="card-positions">${positions}</div>
-        <div class="card-info">
-          <div class="card-info-row">📅 排练：${t.rehearsal_time}</div>
-          <div class="card-info-row">🎬 路演：${t.performance_time}</div>
-          ${t.join_condition ? `<div class="card-info-row">💎 ${t.join_condition}</div>` : ''}
-        </div>
-        <div class="card-footer">
-          <div class="card-members">
-            <div class="card-avatars">${avatars}</div>
-            <span class="card-count">${t.member_count}/${t.max_members}人</span>
-          </div>
-          <div class="card-right">📍 ${t.district || '未设置'}</div>
-        </div>
-      </div>`;
+// 反馈历史
+let FEEDBACKS = [
+  { id:1, type:'feature', content:'希望增加排练提醒功能，容易忘记时间', contact:'kpop_sz_001', time:'昨天 14:30', status:'已收到' },
+  { id:2, type:'bug', content:'发布组队时选择混合团后，组合名列表没刷新', contact:'kpop_sz_001', time:'3天前', status:'已修复' }
+];
+let fbIdCounter = 100;
+
+// 找替记录
+let SUBSTITUTES = [
+  { id:1, team_id:5, poster_openid:'user_015', poster_name:'果冻', part:'Felix位', status:'open', applicants:[] }
+];
+let subIdCounter = 100;
+
+// 队伍数据 - locations 数组结构（需求13）
+let TEAMS = [
+  { id:1, combo_type:'girl', combo_name:'aespa', song_name:'Iconic', missing_positions:['karina位','winter位'],
+    rehearsal_time:'8月7日晚', performance_time:'8月8日路演', locations:['civic'], location_note:'',
+    max_members:5, audit_level:'medium', notes:'aespa新歌！急急急！要有基础的~', status:'active',
+    creator_openid:'user_001', creator_nickname:'小舞', member_count:2,
+    members:[{openid:'user_001',part:'giselle位'},{openid:'user_002',part:'winter位'}],
+    applications:[{openid:'user_100',part:'karina位',video_url:'https://v.douyin.com/aespa-karina-cover',status:'pending',message:'练了三个月，超想跳这首歌！',reject_count:0}],
+    created_at:'今天 16:30' },
+  { id:2, combo_type:'girl', combo_name:'IVE', song_name:'恋爱的条件', missing_positions:['姜位','罗位'],
+    rehearsal_time:'周六下午', performance_time:'周日下午', locations:['studio'], location_note:'南山区某自助舞室，具体位置可协商',
+    max_members:5, audit_level:'none', notes:'等1人！新手友好~', status:'active',
+    creator_openid:'user_003', creator_nickname:'葡萄', member_count:4,
+    members:[{openid:'user_003',part:'liz位'},{openid:'user_004',part:'安宥真位'},{openid:'user_005',part:'张元英位'},{openid:'user_006',part:'直玗位'}],
+    applications:[], created_at:'今天 15:00' },
+  { id:3, combo_type:'girl', combo_name:'aespa', song_name:'Whiplash', missing_positions:['柳智敏成品位'],
+    rehearsal_time:'7月26日', performance_time:'8月1日路演', locations:['civic'], location_note:'',
+    max_members:5, audit_level:'strict', notes:'急急急！成品位！要求高水平~', status:'active',
+    creator_openid:'user_007', creator_nickname:'樱桃', member_count:3,
+    members:[{openid:'user_007',part:'karina位'},{openid:'user_008',part:'宁宁位'},{openid:'user_009',part:'柳智敏位'}],
+    applications:[], created_at:'昨天 20:00' },
+  { id:4, combo_type:'boy', combo_name:'SEVENTEEN', song_name:'MAESTRO', missing_positions:['珉奎位','THE8位'],
+    rehearsal_time:'下周三晚', performance_time:'下周六路演', locations:['community','civic'], location_note:'福田区党群服务中心或市民中心，可协商换场地',
+    max_members:4, audit_level:'light', notes:'会跳的来！简单看下视频就行~', status:'active',
+    creator_openid:'user_010', creator_nickname:'布丁', member_count:2,
+    members:[{openid:'user_010',part:'Hoshi位'},{openid:'user_011',part:'净汉位'}],
+    applications:[], created_at:'7月19日' },
+  { id:5, combo_type:'boy', combo_name:'Stray Kids', song_name:'Chk Chk Boom', missing_positions:['铉辰位'],
+    rehearsal_time:'这周末', performance_time:'下周末路演', locations:['civic','studio'], location_note:'',
+    max_members:8, audit_level:'medium_strict', notes:'要求有一定成品经验哦~', status:'active',
+    creator_openid:'user_012', creator_nickname:'泡芙', member_count:6,
+    members:[{openid:'user_012',part:'Bang Chan位'},{openid:'user_013',part:'Lee Know位'},{openid:'user_014',part:'Changbin位'},{openid:'user_015',part:'Han位'},{openid:'user_016',part:'Felix位'},{openid:'user_017',part:'Seungmin位'}],
+    applications:[], created_at:'7月18日' },
+  { id:6, combo_type:'mixed', combo_name:'KARD', song_name:'Ring The Alarm', missing_positions:['BM位','전소민位'],
+    rehearsal_time:'8月10日', performance_time:'8月15日路演', locations:['studio','community'], location_note:'罗湖自助舞室或党群中心，位置可协商',
+    max_members:4, audit_level:'medium', notes:'男女混合团！男生女生都缺~', status:'active',
+    creator_openid:ME, creator_nickname:'我', member_count:2,
+    members:[{openid:ME,part:'J.Seph位'},{openid:'user_019',part:'Jiwoo位'}],
+    applications:[{openid:'user_200',part:'BM位',video_url:'[本地]dance_883021.mp4',status:'pending',message:'BM位老手了，之前跳过好几次KARD',reject_count:0}],
+    created_at:'7月17日' },
+  { id:7, combo_type:'girl', combo_name:'NewJeans', song_name:'Super Shy', missing_positions:[],
+    rehearsal_time:'已排练完成', performance_time:'已路演', locations:['civic'], location_note:'',
+    max_members:5, audit_level:'none', notes:'已完队~', status:'completed',
+    creator_openid:ME, creator_nickname:'我', member_count:5,
+    members:[{openid:ME,part:'Minji位'},{openid:'user_005',part:'Hanni位'},{openid:'user_006',part:'Danielle位'},{openid:'user_008',part:'Haerin位'},{openid:'user_009',part:'Hyein位'}],
+    applications:[], created_at:'7月10日' }
+];
+let idCounter = 100;
+
+// ═══════════ 首页状态 ═══════════
+let homeState = { keyword:'', type:'', combo:'' };
+let currentTab = 'home';
+let detailId = null;
+let pubState = null;
+let leftView = 'home'; // home, publish, mine, feedback, profileEdit
+
+function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1900); }
+
+function filterTeams(){
+  return TEAMS.filter(t=>{
+    if(t.status!=='active') return false;
+    if(homeState.type && t.combo_type!==homeState.type) return false;
+    if(homeState.combo && t.combo_name!==homeState.combo) return false;
+    if(homeState.keyword){
+      const kw=homeState.keyword.toLowerCase();
+      if(!(t.song_name.toLowerCase().includes(kw) || t.combo_name.toLowerCase().includes(kw) || t.missing_positions.some(p=>p.toLowerCase().includes(kw)))) return false;
+    }
+    return true;
   });
-  document.getElementById('teamList').innerHTML = html || '<div style="text-align:center;padding:60px;color:var(--text-muted);">🎵 暂无组队信息</div>';
 }
 
-// 筛选
-document.getElementById('districtFilter').addEventListener('click', function(e) {
-  if (e.target.classList.contains('filter-tag')) {
-    this.querySelectorAll('.filter-tag').forEach(t => t.classList.remove('active'));
-    e.target.classList.add('active');
-    currentDistrict = e.target.dataset.district;
-    render();
+function formatLocations(team){
+  if(team.locations && team.locations.length>0){
+    return team.locations.map(l=>LOC[l].name).join(' / ');
   }
-});
-
-function showToast(msg) {
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 2000);
+  // 兼容旧数据
+  if(team.location) return LOC[team.location].name;
+  return '';
 }
 
-function openPublish() {
-  document.getElementById('publishModal').classList.add('show');
-  posList = [];
-  document.getElementById('posTags').innerHTML = '';
-}
-function closePublish() {
-  document.getElementById('publishModal').classList.remove('show');
-}
-
-function addPosition() {
-  const input = document.getElementById('fPos');
-  const val = input.value.trim();
-  if (!val) return;
-  if (posList.includes(val)) { showToast('该位置已添加'); return; }
-  posList.push(val);
-  input.value = '';
-  document.getElementById('posTags').innerHTML = posList.map((p,i) => 
-    `<span class="pos-tag">${p}<span class="pos-remove" onclick="removePos(${i})">✕</span></span>`
-  ).join('');
-}
-
-function removePos(i) {
-  posList.splice(i,1);
-  document.getElementById('posTags').innerHTML = posList.map((p,i) => 
-    `<span class="pos-tag">${p}<span class="pos-remove" onclick="removePos(${i})">✕</span></span>`
-  ).join('');
-}
-
-function publishTeam() {
-  const song = document.getElementById('fSong').value.trim();
-  if (!song) { showToast('请输入歌曲名'); return; }
-  if (posList.length === 0) { showToast('请添加缺位信息'); return; }
-  const rehearsal = document.getElementById('fRehearsal').value.trim();
-  if (!rehearsal) { showToast('请输入排练时间'); return; }
-  const perf = document.getElementById('fPerf').value.trim();
-  if (!perf) { showToast('请输入路演时间'); return; }
-
-  teams.unshift({
-    id: Date.now(),
-    song_name: song,
-    missing_positions: [...posList],
-    rehearsal_time: rehearsal,
-    performance_time: perf,
-    max_members: parseInt(document.getElementById('fMax').value) || 5,
-    join_condition: document.getElementById('fCondition').value,
-    notes: document.getElementById('fNotes').value.trim(),
-    district: document.getElementById('fDistrict').value,
-    status: 'active',
-    member_count: 1,
-    members: [{nickname:'我',position:'队长位'}]
-  });
-
-  closePublish();
-  ['fSong','fPos','fRehearsal','fPerf','fNotes'].forEach(id => document.getElementById(id).value = '');
-  posList = [];
-  showToast('发布成功! 🎉');
-  render();
-}
-
-function showDetail(id) {
-  const t = teams.find(x => x.id === id);
-  if (!t) return;
-  const membersHtml = t.members.map(m => 
-    `<div style="display:flex;align-items:center;padding:10px 0;border-bottom:1px solid rgba(192,132,252,0.06);">
-      <div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#c084fc,#f472b6);display:flex;align-items:center;justify-content:center;font-size:15px;color:white;margin-right:10px;">${m.nickname?m.nickname[0]:'👤'}</div>
-      <span style="color:var(--text);">${m.nickname||'匿名'}</span>
-      ${m.position ? `<span style="margin-left:auto;font-size:12px;color:var(--text-secondary);">${m.position}</span>` : ''}
-    </div>`
-  ).join('');
-
-  const modal = document.createElement('div');
-  modal.className = 'modal-overlay show';
-  modal.innerHTML = `<div class="modal" style="border-radius:24px 24px 0 0;">
-    <h3>🎤 ${t.song_name}</h3>
-    <div style="margin-bottom:12px;"><span style="font-size:12px;color:var(--pink);background:rgba(244,114,182,0.15);padding:3px 12px;border-radius:50px;">🔥 组队中</span></div>
-    <div style="margin-bottom:12px;"><b style="color:var(--purple);">🎯 缺什么位</b><br>
-      <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:6px;">
-        ${t.missing_positions.map(p => `<span style="padding:6px 14px;border-radius:50px;font-size:12px;background:rgba(192,132,252,0.15);color:var(--purple-light);">${p}</span>`).join('')}
+// ═══════════ 渲染首页 ═══════════
+function renderHome(){
+  const teams = filterTeams();
+  const hot = homeState.type ? HOT_COMBOS[homeState.type] : [];
+  let html = `
+    <div class="hero">
+      <h2>🎵 深圳 Kpop 路演组队</h2>
+      <p>找到你的路演搭子，一起上舞台！</p>
+      <div class="stat"><b>${teams.length}</b><span>组队中</span></div>
+    </div>
+    <div class="search-bar">
+      <div class="search-wrap">
+        <span>🔍</span>
+        <input id="searchInput" placeholder="搜索组合名或歌曲名..." value="${homeState.keyword}" oninput="onSearch(this.value)">
+        ${homeState.keyword?`<span class="clr" onclick="clearSearch()">✕</span>`:''}
       </div>
     </div>
-    <div style="margin-bottom:12px;"><b style="color:var(--purple);">⏰ 时间</b><br>
-      <span style="color:var(--text-secondary);font-size:13px;">📅 排练：${t.rehearsal_time}</span><br>
-      <span style="color:var(--text-secondary);font-size:13px;">🎬 路演：${t.performance_time}</span>
+    <div class="filter-block">
+      <div class="type-row">
+        <div class="type-tag ${homeState.type===''?'active':''}" onclick="setType('')">全部</div>
+        <div class="type-tag ${homeState.type==='boy'?'active':''}" onclick="setType('boy')">🕺 男团</div>
+        <div class="type-tag ${homeState.type==='girl'?'active':''}" onclick="setType('girl')">💃 女团</div>
+        <div class="type-tag ${homeState.type==='mixed'?'active':''}" onclick="setType('mixed')">👫 混合</div>
+      </div>
+      ${homeState.type?`<div class="combo-row">
+        <div class="combo-tag ${homeState.combo===''?'active':''}" onclick="setCombo('')">全部组合</div>
+        ${hot.map(c=>`<div class="combo-tag ${homeState.combo===c?'active':''}" onclick="setCombo('${c.replace(/'/g,"\\'")}')">${c}</div>`).join('')}
+      </div>`:''}
     </div>
-    ${t.join_condition ? `<div style="margin-bottom:12px;"><b style="color:var(--purple);">💎 条件</b><br><span style="color:var(--text-secondary);">${t.join_condition}</span></div>` : ''}
-    ${t.notes ? `<div style="margin-bottom:12px;"><b style="color:var(--purple);">📝 备注</b><br><span style="color:var(--text-secondary);">${t.notes}</span></div>` : ''}
-    <div style="margin-bottom:12px;"><b style="color:var(--purple);">👥 已上车 (${t.member_count}/${t.max_members})</b></div>
-    <div style="margin-bottom:12px;">${membersHtml}</div>
-    <div style="height:8px;background:rgba(192,132,252,0.1);border-radius:8px;margin-bottom:8px;">
-      <div style="height:100%;background:linear-gradient(90deg,#c084fc,#f472b6);border-radius:8px;width:${t.member_count/t.max_members*100}%;"></div>
-    </div>
-    <div style="text-align:center;font-size:13px;color:var(--text-muted);margin-bottom:16px;">还差 ${t.max_members - t.member_count} 人满员</div>
-    <button class="btn-submit" onclick="joinTeam(${t.id}, this)">🚀 我要上车</button>
-    <div style="text-align:center;margin-top:12px;color:var(--text-muted);cursor:pointer;font-size:13px;" onclick="this.closest('.modal-overlay').remove()">关闭</div>
+    <div class="team-list">`;
+
+  if(teams.length===0){
+    html += `<div class="empty"><span class="ei">🎵</span><span class="et">没有找到符合条件的组队</span><span>换个条件，或发布第一个吧！</span></div>`;
+  } else {
+    teams.forEach(t=>{
+      const hasJoined = t.members.some(m=>m.openid===ME);
+      const isDone = t.status==='completed';
+      html += `<div class="card" onclick="openDetail(${t.id})">
+        ${hasJoined?'<div class="joined-flag">✅ 已上车</div>':''}
+        <div class="status ${isDone?'done':''}">${isDone?'✅ 已完队':(t.status==='cancelled'?'❌ 已取消':'🔥 组队中')}</div>
+        <div class="song"><span class="combo-badge">${COMBO_TYPES[t.combo_type].emoji} ${t.combo_name}</span><span class="name">${t.song_name}</span></div>
+        <div class="pos">${t.missing_positions.map(p=>`<span class="pos-tag">🎯 ${p}</span>`).join('')}</div>
+        <div class="info">
+          <div class="row">📅 排练：${t.rehearsal_time}</div>
+          <div class="row">🎬 路演：${t.performance_time}</div>
+          <div class="row">📍 ${formatLocations(t)}${t.location_note?'（'+t.location_note+'）':''}</div>
+        </div>
+        <div class="foot">
+          <div class="left">
+            <div class="avatars">${t.members.slice(0,3).map(m=>`<div class="av">${getUser(m.openid).avatar}</div>`).join('')}</div>
+            <span class="cnt">${t.member_count}/${t.max_members}人</span>
+          </div>
+          <span class="audit-badge a-${t.audit_level}">${AUDIT[t.audit_level].emoji} ${AUDIT[t.audit_level].name}</span>
+        </div>
+      </div>`;
+    });
+  }
+  html += `</div><div class="fab" onclick="openPublish()">+</div>`;
+  document.getElementById('screen').innerHTML = html;
+  document.getElementById('nav').textContent = 'KPOP深圳组队';
+}
+
+function onSearch(v){ homeState.keyword=v; renderHomeListOnly(); }
+function renderHomeListOnly(){
+  renderHome();
+  const inp=document.getElementById('searchInput'); if(inp){ inp.focus(); inp.setSelectionRange(inp.value.length,inp.value.length); }
+}
+function clearSearch(){ homeState.keyword=''; renderHome(); }
+function setType(t){ homeState.type = t===homeState.type?'':t; homeState.combo=''; renderHome(); }
+function setCombo(c){ homeState.combo = c===homeState.combo?'':c; renderHome(); }
+
+// ═══════════ 发布页（需求6, 12, 13） ═══════════
+function openPublish(){
+  pubState = { comboType:'', comboName:'', songName:'', posInput:'', positions:[], rehearsal:'', performance:'', locations:[], locationNegotiable:false, locationNote:'', max:5, audit:'none', notes:'', myPart:'' };
+  renderPublish();
+}
+function renderPublish(){
+  const s=pubState;
+  const hot = s.comboType ? HOT_COMBOS[s.comboType] : [];
+  document.getElementById('nav').innerHTML = `<span class="back" onclick="backHome()">‹</span>发布组队`;
+  document.getElementById('screen').innerHTML = `
+    <div class="form"><div class="fcard">
+      <h3>🎵 发布组队信息</h3><div class="sub">填写信息，快速找到路演搭子！</div>
+      <div class="fg"><label>🎭 组合类型 <span class="req">*</span></label>
+        <div class="opt-row">
+          <div class="opt ${s.comboType==='boy'?'active':''}" onclick="pubSet('comboType','boy')">🕺 男团</div>
+          <div class="opt ${s.comboType==='girl'?'active':''}" onclick="pubSet('comboType','girl')">💃 女团</div>
+          <div class="opt ${s.comboType==='mixed'?'active':''}" onclick="pubSet('comboType','mixed')">👫 混合团</div>
+        </div>
+      </div>
+      ${s.comboType?`<div class="fg"><label>🎤 组合名 <span class="req">*</span></label>
+        <input placeholder="输入组合名，或从下方热门选择" value="${s.comboName}" oninput="pubInput('comboName',this.value)">
+        <div class="hot-combos">${hot.map(c=>`<div class="hot-combo ${s.comboName===c?'active':''}" onclick="pubPickCombo('${c.replace(/'/g,"\\'")}')">${c}</div>`).join('')}</div>
+      </div>`:''}
+      <div class="fg"><label>🎵 歌曲名 <span class="req">*</span></label>
+        <input placeholder="如：Iconic、Supernova..." value="${s.songName}" oninput="pubInput('songName',this.value)"></div>
+      <div class="fg"><label>🎯 还缺什么位置 <span class="req">*</span></label>
+        <div class="pos-input-wrap">
+          <input id="posInput" placeholder="如：karina位、winter位" value="${s.posInput}" oninput="pubInput('posInput',this.value)" onkeydown="if(event.key==='Enter')pubAddPos()">
+          <div class="add-btn" onclick="pubAddPos()">添加</div>
+        </div>
+        <div class="chip-row">${s.positions.map((p,i)=>`<div class="chip">${p}<span class="x" onclick="pubDelPos(${i})">✕</span></div>`).join('')}</div>
+      </div>
+      <div class="fg"><label>🙋 我跳的位置（车主） <span class="req">*</span></label>
+        <input placeholder="如：你跳 karina位 / 你负责主舞" value="${s.myPart}" oninput="pubInput('myPart',this.value)"></div>
+      <div class="fg"><label>📅 排练时间 <span class="req">*</span></label>
+        <input placeholder="如：8月7日晚、周六下午" value="${s.rehearsal}" oninput="pubInput('rehearsal',this.value)"></div>
+      <div class="fg"><label>🎬 路演时间 <span class="req">*</span></label>
+        <input placeholder="如：8月8日、周日下午" value="${s.performance}" oninput="pubInput('performance',this.value)"></div>
+      <div class="fg"><label>📍 排练地点 <span class="req">*</span> <span style="font-size:11px;color:#a094b8;font-weight:400">（可多选）</span></label>
+        <div class="loc-multi">
+          <div class="loc-opt ${s.locations.includes('civic')?'active':''}" onclick="pubToggleLoc('civic')">🏛️ 市民中心</div>
+          <div class="loc-opt ${s.locations.includes('studio')?'active':''}" onclick="pubToggleLoc('studio')">🪩 自助舞室</div>
+          <div class="loc-opt ${s.locations.includes('community')?'active':''}" onclick="pubToggleLoc('community')">🏢 党群服务中心</div>
+        </div>
+        <div class="loc-negotiable ${s.locationNegotiable?'active':''}" onclick="pubToggleNegotiable()">${s.locationNegotiable?'✅':''} 🤝 排练地点可协商</div>
+        ${(s.locations.includes('studio')||s.locations.includes('community'))?`<input style="margin-top:10px" placeholder="请填写具体位置，或注明可协商" value="${s.locationNote}" oninput="pubInput('locationNote',this.value)">`:''}
+      </div>
+      <div class="fg"><label>👥 人数</label>
+        <div class="stepper"><div class="step-btn" onclick="pubStep(-1)">−</div><div class="step-val">${s.max}</div><div class="step-btn" onclick="pubStep(1)">+</div></div>
+        <div class="audit-desc">人数确定后不可临时加人，发布前想清楚哦</div>
+      </div>
+      <div class="fg"><label>🛡️ 上车审核 <span class="req">*</span></label>
+        <div class="audit-opts">${Object.keys(AUDIT).map(k=>`<div class="audit-opt on-${k} ${s.audit===k?'active':''}" onclick="pubSet('audit','${k}')">${AUDIT[k].emoji} ${AUDIT[k].name}</div>`).join('')}</div>
+        <div class="audit-desc">${AUDIT[s.audit].desc}${s.audit!=='none'?`<span class="tip">💡 非"无审核"组队，想上车的舞者需提交舞蹈视频，你看过后决定是否通过</span>`:''}</div>
+      </div>
+      <div class="fg"><label>📝 备注</label>
+        <textarea placeholder="补充说明，如：成品位、急急急、会跳的来..." oninput="pubInput('notes',this.value)">${s.notes}</textarea>
+        <div class="notes-hint">💡 建议备注：<br><b>1.</b> 服装要求（如统一色系）<br><b>2.</b> 跳车需找替<br><b>3.</b> 需成年<br><b>4.</b> 上哪场路演</div>
+      </div>
+      <button class="submit-btn" onclick="pubSubmit()">🚀 发布组队</button>
+    </div></div>`;
+}
+function pubSet(k,v){ pubState[k]=v; if(k==='comboType')pubState.comboName=''; renderPublish(); }
+function pubInput(k,v){ pubState[k]=v; }
+function pubPickCombo(c){ pubState.comboName=c; renderPublish(); }
+function pubAddPos(){ const p=pubState.posInput.trim(); if(!p)return; if(pubState.positions.includes(p)){toast('该位置已添加');return;} pubState.positions.push(p); pubState.posInput=''; renderPublish(); }
+function pubDelPos(i){ pubState.positions.splice(i,1); renderPublish(); }
+function pubStep(d){ pubState.max=Math.max(1,Math.min(20,pubState.max+d)); renderPublish(); }
+function pubToggleLoc(loc){
+  const idx=pubState.locations.indexOf(loc);
+  if(idx>=0) pubState.locations.splice(idx,1);
+  else pubState.locations.push(loc);
+  renderPublish();
+}
+function pubToggleNegotiable(){ pubState.locationNegotiable=!pubState.locationNegotiable; renderPublish(); }
+function pubSubmit(){
+  const s=pubState;
+  if(!s.comboType){toast('请选择组合类型');return;}
+  if(!s.comboName.trim()){toast('请输入组合名');return;}
+  if(!s.songName.trim()){toast('请输入歌曲名');return;}
+  if(s.positions.length===0){toast('请添加缺位信息');return;}
+  if(!s.myPart.trim()){toast('请填写你跳的位置');return;}
+  if(!s.rehearsal.trim()){toast('请输入排练时间');return;}
+  if(!s.performance.trim()){toast('请输入路演时间');return;}
+  if(s.locations.length===0){toast('请至少选择一个排练地点');return;}
+  if((s.locations.includes('studio')||s.locations.includes('community'))&&!s.locationNote.trim()&&!s.locationNegotiable){toast('请填写具体位置或勾选可协商');return;}
+  const nt={ id:++idCounter, combo_type:s.comboType, combo_name:s.comboName.trim(), song_name:s.songName.trim(),
+    missing_positions:[...s.positions], rehearsal_time:s.rehearsal.trim(), performance_time:s.performance.trim(),
+    locations:[...s.locations], location_note:s.locationNote.trim(), max_members:s.max, audit_level:s.audit, notes:s.notes.trim(),
+    status:'active', creator_openid:ME, creator_nickname:ME_USER.nickname, member_count:1,
+    members:[{openid:ME,part:s.myPart.trim()}], applications:[], created_at:'刚刚' };
+  TEAMS.unshift(nt);
+  toast('发布成功! 🎉');
+  setTimeout(()=>backHome(),700);
+}
+function backHome(){ leftView='home'; currentTab='home'; renderHome(); setTab('home'); }
+
+// ═══════════ 我的页（需求2: 反馈入口） ═══════════
+function renderMine(){
+  leftView='mine';
+  document.getElementById('nav').textContent='我的';
+  const u=ME_USER;
+  const published = TEAMS.filter(t=>t.creator_openid===ME);
+  const joined = TEAMS.filter(t=>t.creator_openid!==ME && t.members.some(m=>m.openid===ME));
+  const applying = TEAMS.filter(t=>(t.applications||[]).some(a=>a.openid===ME&&a.status==='pending'));
+  const danced = TEAMS.filter(t=>t.status==='completed' && (t.creator_openid===ME || t.members.some(m=>m.openid===ME)));
+  const mini=(t,extra='')=>`<div class="tmini" onclick="openDetail(${t.id})">
+    <div class="tl"><span class="ts">🎤 ${t.combo_name} · ${t.song_name}</span><span class="ti">${t.member_count}/${t.max_members}人 · ${formatLocations(t)}</span></div>
+    <div class="tr">${extra}<span class="ss">${t.status==='active'?'🔥':t.status==='completed'?'✅':'❌'}</span></div>
   </div>`;
-  modal.addEventListener('click', function(e) { if (e.target === modal) modal.remove(); });
-  document.body.appendChild(modal);
+  document.getElementById('screen').innerHTML=`
+    <div class="user-card">
+      <div class="uav">${u.avatar}</div>
+      <span class="un">${u.nickname}</span>
+      <span class="uid">ID: ${u.openid}</span>
+      ${u.bio?`<span class="ubio">✍️ ${u.bio}</span>`:''}
+      <span class="uwx" onclick="copyWx('${u.wechat}')">💬 微信：${u.wechat}（点击复制）</span>
+      <div class="edit-btn" onclick="renderProfileEdit()">✏️ 编辑资料</div>
+    </div>
+    <div class="mine-sec"><div class="sh"><span class="st">📋 我发布的组队</span><span class="sc">${published.length}条</span></div>
+      ${published.length?published.map(t=>mini(t, (t.applications||[]).filter(a=>a.status==='pending').length?`<span class="pend">📩 ${(t.applications||[]).filter(a=>a.status==='pending').length}待审</span>`:'')).join(''):'<div class="empty-mini">还没有发布过组队</div>'}
+    </div>
+    ${applying.length?`<div class="mine-sec"><div class="sh"><span class="st">⏳ 审核中的申请</span><span class="sc">${applying.length}条</span></div>${applying.map(t=>mini(t,'')).join('')}</div>`:''}
+    <div class="mine-sec"><div class="sh"><span class="st">🚀 我报名的组队</span><span class="sc">${joined.length}条</span></div>
+      ${joined.length?joined.map(t=>mini(t,'')).join(''):'<div class="empty-mini">还没有报名任何组队</div>'}
+    </div>
+    <div class="mine-sec"><div class="sh"><span class="st">💃 我跳过的舞</span><span class="sc">${danced.length}支</span></div>
+      ${danced.length?danced.map(t=>mini(t,'')).join(''):'<div class="empty-mini">完成组队后，这里会留下你跳过的舞</div>'}
+    </div>
+    <div class="mine-sec">
+      <div class="mine-menu-item" onclick="renderFeedback()">
+        <span class="ico">💬</span><span>反馈意见</span><span class="arrow">›</span>
+      </div>
+      <div class="mine-menu-item" onclick="toast('敬请期待！')">
+        <span class="ico">⚙️</span><span>设置</span><span class="arrow">›</span>
+      </div>
+    </div>
+    <div class="mine-sec"><div class="sh"><span class="st">ℹ️ 关于</span></div>
+      <div style="font-size:12px;color:#a094b8;line-height:1.8;">🎵 深圳KPOP路演组队 v3.0<br>帮助深圳 Kpop 舞者快速找到路演搭子<br>🚧 开发中，欢迎反馈</div>
+    </div>`;
 }
 
-function joinTeam(id, btn) {
-  const t = teams.find(x => x.id === id);
-  if (!t) return;
-  if (t.member_count >= t.max_members) { showToast('人数已满'); return; }
-  t.member_count++;
-  t.members.push({nickname:'我',position:'新成员'});
-  btn.closest('.modal-overlay').remove();
-  showToast('上车成功! 🚀');
-  render();
+// ═══════════ 反馈页面（需求2） ═══════════
+let fbState = { type:'bug', content:'', contact:ME_USER.wechat };
+function renderFeedback(){
+  leftView='feedback';
+  document.getElementById('nav').innerHTML=`<span class="back" onclick="renderMine()">‹</span>💬 反馈意见`;
+  document.getElementById('screen').innerHTML=`
+    <div class="form"><div class="fcard">
+      <h3>💬 反馈意见</h3>
+      <div class="sub">遇到问题或有建议？告诉我们，一起做得更好</div>
+      <div class="fg"><label>📋 反馈类型</label>
+        <div class="fb-type-row">
+          ${Object.keys(FB_TYPES).map(k=>`<div class="fb-type ${fbState.type===k?'active':''}" onclick="fbSetType('${k}')">${FB_TYPES[k].emoji} ${FB_TYPES[k].name}</div>`).join('')}
+        </div>
+      </div>
+      <div class="fg"><label>📝 反馈内容 <span class="req">*</span></label>
+        <textarea id="fbContent" placeholder="请详细描述你遇到的问题或建议..." style="min-height:100px" oninput="fbState.content=this.value">${fbState.content}</textarea>
+      </div>
+      <div class="fg"><label>📞 联系方式（选填）</label>
+        <input id="fbContact" placeholder="微信/手机号，方便我们回复" value="${fbState.contact}" oninput="fbState.contact=this.value">
+      </div>
+      <button class="submit-btn" onclick="fbSubmit()">📤 提交反馈</button>
+    </div></div>
+    <div class="mine-sec" style="margin-top:14px">
+      <div class="sh"><span class="st">📜 历史反馈</span><span class="sc">${FEEDBACKS.length}条</span></div>
+      ${FEEDBACKS.length?FEEDBACKS.map(f=>`<div class="fb-history-item">
+        <span class="fh-type" style="background:rgba(${hexToRgb(FB_TYPES[f.type].color)},0.15);color:${FB_TYPES[f.type].color}">${FB_TYPES[f.type].emoji} ${FB_TYPES[f.type].name}</span>
+        <div class="fh-content">${f.content}</div>
+        <div class="fh-meta">${f.time} · ${f.status}${f.contact?' · 联系方式：'+f.contact:''}</div>
+      </div>`).join(''):'<div class="empty-mini">还没有反馈记录</div>'}
+    </div>`;
+}
+function fbSetType(t){ fbState.type=t; renderFeedback(); }
+function fbSubmit(){
+  if(!fbState.content.trim()){toast('请填写反馈内容');return;}
+  const fb={ id:++fbIdCounter, type:fbState.type, content:fbState.content.trim(), contact:fbState.contact.trim(), time:'刚刚', status:'已收到' };
+  FEEDBACKS.unshift(fb);
+  fbState.content='';
+  toast('反馈已提交，感谢你的支持！ 🙏');
+  renderFeedback();
+}
+function hexToRgb(hex){
+  const r=parseInt(hex.slice(1,3),16), g=parseInt(hex.slice(3,5),16), b=parseInt(hex.slice(5,7),16);
+  return `${r},${g},${b}`;
 }
 
-// 初始渲染
-render();
+// ═══════════ 编辑资料 ═══════════
+let peAvatar = ME_USER.avatar;
+function renderProfileEdit(){
+  leftView='profileEdit';
+  document.getElementById('nav').innerHTML=`<span class="back" onclick="renderMine()">‹</span>编辑资料`;
+  const u=ME_USER;
+  document.getElementById('screen').innerHTML=`
+    <div class="form"><div class="fcard">
+      <h3>✏️ 编辑我的资料</h3>
+      <div class="sub">登录后即可修改，方便车友认出你</div>
+      <div class="fg"><label>昵称</label><input id="peName" value="${u.nickname}"></div>
+      <div class="fg"><label>头像</label>
+        <div class="avatar-grid">${AVATARS.map(a=>`<div class="av-opt ${peAvatar===a?'active':''}" onclick="peAvatar='${a}';renderProfileEdit()">${a}</div>`).join('')}</div>
+      </div>
+      <div class="fg"><label>微信号 <span class="req">*</span></label><input id="peWx" value="${u.wechat}" placeholder="用于同车后联系"></div>
+      <div class="fg"><label>一句话简介</label><textarea id="peBio" placeholder="如：女团博爱粉、男团舞爱好者">${u.bio}</textarea></div>
+      <button class="submit-btn" onclick="saveProfile()">💾 保存</button>
+      <button class="cancel-link" onclick="renderMine()">取消</button>
+    </div></div>`;
+}
+function saveProfile(){
+  const name=(document.getElementById('peName').value||'').trim();
+  const wx=(document.getElementById('peWx').value||'').trim();
+  const bio=(document.getElementById('peBio').value||'').trim();
+  if(!name){toast('昵称不能为空');return;}
+  if(!wx){toast('请填写微信号，方便同车联系');return;}
+  ME_USER.nickname=name; ME_USER.wechat=wx; ME_USER.bio=bio; ME_USER.avatar=peAvatar;
+  toast('资料已保存 ✅');
+  renderMine();
+}
+function copyWx(w){ toast('已复制微信：'+w); }
+
+// ═══════════ tab 切换 ═══════════
+function setTab(tab){ document.querySelectorAll('#tabbar .tab').forEach(el=>el.classList.toggle('active', el.dataset.tab===tab)); }
+function switchTab(tab){ currentTab=tab; setTab(tab); if(tab==='home')renderHome(); else renderMine(); }
+
+// ═══════════ 详情页（右手机） ═══════════
+let joinInputVal='', videoInputVal='', applyMode='upload', applyMessage='';
+let manageMemberOpenid=null, posEditOpenid=null, bioPopupOpenid=null;
+
+function openDetail(id){ detailId=id; joinInputVal=''; videoInputVal=''; applyMode='upload'; applyMessage=''; renderDetail(); document.getElementById('screen2').scrollTop=0; }
+function closeDetail(){ detailId=null; clearPopups(); document.getElementById('screen2').innerHTML=`<div class="empty" style="padding-top:200px"><span class="ei">👈</span><span class="et">点击左侧任意组队卡片</span><span>查看详情 & 体验上车审核</span></div>`; document.getElementById('nav2').innerHTML=`<span class="back" onclick="closeDetail()">‹</span>组队详情`; }
+
+function clearPopups(){ manageMemberOpenid=null; posEditOpenid=null; bioPopupOpenid=null; }
+
+function renderDetail(){
+  const t = TEAMS.find(x=>x.id===detailId);
+  if(!t){ closeDetail(); return; }
+  const isCreator = t.creator_openid===ME;
+  const hasJoined = t.members.some(m=>m.openid===ME);
+  const myApp = (t.applications||[]).find(a=>a.openid===ME);
+  const pending = (t.applications||[]).filter(a=>a.status==='pending');
+  // 需求4: 组队完成后所有成员微信可见，组队成功前只有车主微信可见
+  const isCompleted = t.status==='completed';
+  const contactVisible = isCompleted || isCreator;
+  // 需求9: 组队完成后可见简介，组队之前看不到
+  const bioVisible = isCompleted;
+  const isDone = t.status==='completed';
+
+  document.getElementById('nav2').innerHTML=`<span class="back" onclick="closeDetail()">‹</span>组队详情`;
+
+  let html = `
+    <div class="dt-head">
+      <span class="status ${isDone?'done':''}">${isDone?'✅ 已完队':'🔥 组队中'}</span>
+      <div><span class="combo-badge">${COMBO_TYPES[t.combo_type].emoji} ${COMBO_TYPES[t.combo_type].name} · ${t.combo_name}</span></div>
+      <div class="name-big">🎤 ${t.song_name}</div>
+      <div class="creator">${t.creator_nickname} 发布</div>
+    </div>
+    <div class="audit-banner ban-${t.audit_level}"><b>${AUDIT[t.audit_level].emoji} 上车审核：${AUDIT[t.audit_level].name}</b><span>${AUDIT[t.audit_level].desc}</span></div>
+    <div class="sec"><h4>🎯 还缺什么位置</h4><div class="pos">${t.missing_positions.length?t.missing_positions.map(p=>`<span class="pos-tag">${p}</span>`).join(''):'<span style="font-size:13px;color:#34d399">✅ 已满员</span>'}</div></div>
+    <div class="sec"><h4>⏰ 时间安排</h4><div class="txt">📅 排练：${t.rehearsal_time}</div><div class="txt" style="margin-top:6px">🎬 路演：${t.performance_time}</div></div>
+    <div class="sec"><h4>📍 排练地点</h4><div class="txt">${formatLocations(t)}</div>${t.location_note?`<span class="sub-txt">${t.location_note}</span>`:''}</div>
+    ${t.notes?`<div class="sec"><h4>📝 备注</h4><div class="txt" style="line-height:1.8">${t.notes}</div></div>`:''}
+    <div class="sec"><h4>👥 已上车 (${t.member_count}/${t.max_members})</h4>
+      ${contactVisible?`<span class="wx-note">💡 ${isCompleted?'组队完成，所有成员微信互相可见':'你是车主，可查看所有成员微信'}</span>`:`<span class="wx-note">🔒 组队成功后，成员微信互相可见</span>`}
+      ${t.members.map(m=>{
+        const u=getUser(m.openid);
+        const isMemCreator = m.openid===t.creator_openid;
+        return `<div class="mem">
+          <div class="mav ${isMemCreator?'creator':''}" onclick="showBioPopup('${m.openid}')">${u.avatar}</div>
+          <div class="minfo">
+            <span class="mn">${u.nickname}</span>
+            ${m.part?`<span class="mp">跳 ${m.part}</span>`:''}
+            ${bioVisible&&u.bio?`<span class="bio-text">✍️ ${u.bio}</span>`:''}
+            ${contactVisible?`<span class="wx" onclick="copyWx('${u.wechat}')">💬 微信：${u.wechat}</span>`:''}
+          </div>
+          ${isMemCreator?'<span class="mtag">车主</span>':''}
+          ${isCreator && !isMemCreator && !isDone?`<span class="gear-btn" onclick="openManage('${m.openid}')">⚙️</span>`:''}
+        </div>`;
+      }).join('')}
+      <div class="pbar"><div class="pfill" style="width:${t.member_count/t.max_members*100}%"></div></div>
+      <div class="ptext">还差 ${t.max_members-t.member_count} 人满员</div>
+    </div>`;
+
+  // 车主：待审核申请（需求7: 申请人简介, 需求10: 附带留言）
+  if(isCreator && pending.length){
+    html += `<div class="sec" style="border-color:rgba(192,132,252,0.25)"><h4>📩 待审核申请 (${pending.length})</h4>
+      <div style="font-size:11px;color:#a094b8;margin-bottom:10px">查看申请人的舞蹈视频和简介，通过后即可互看微信约排练</div>
+      ${pending.map(a=>{
+        const u=getUser(a.openid);
+        const vtext = a.video_url && a.video_url.indexOf('[本地]')===0 ? '📹 已上传视频（仅车主可见）' : (a.video_url||'未提供视频');
+        return `<div class="app-item">
+          <div class="app-head">
+            <div class="mav" style="width:34px;height:34px;margin-right:12px;font-size:16px">${u.avatar}</div>
+            <div class="minfo">
+              <span class="mn">${u.nickname}</span>
+              <span class="mp">想跳：${a.part||'未填写'}</span>
+              ${u.bio?`<div class="app-bio">✍️ ${u.bio}</div>`:''}
+            </div>
+          </div>
+          ${a.message?`<div class="app-msg">💬 "${a.message}"</div>`:''}
+          <div class="app-video" onclick="viewVideo('${a.video_url}')"><span>▶️</span><span class="vu">${vtext}</span></div>
+          <div class="app-acts"><button class="app-btn no" onclick="renderReject('${a.openid}')">委婉拒绝</button><button class="app-btn ok" onclick="review('${a.openid}',true)">✅ 接受组队</button></div>
+        </div>`;
+      }).join('')}
+    </div>`;
+  }
+
+  // 找替功能区域（需求3）
+  const subs = SUBSTITUTES.filter(s=>s.team_id===t.id);
+  if(subs.length>0){
+    html += `<div class="sub-section"><h4>🔄 找替信息</h4>`;
+    subs.forEach(s=>{
+      const poster = getUser(s.poster_openid);
+      html += `<div class="sub-post">
+        <div class="sp-head">
+          <div class="mav" style="width:30px;height:30px;font-size:14px">${poster.avatar}</div>
+          <div class="sp-info">
+            <span class="sp-name">${poster.nickname} 找替</span>
+            <span class="sp-part">跳 ${s.part}</span>
+          </div>
+          <span class="sp-status ${s.status==='open'?'open':'matched'}">${s.status==='open'?'寻找中':'已确认'}</span>
+        </div>
+        ${s.status==='open' && hasJoined && s.poster_openid!==ME?`<button class="join-btn" style="width:100%;font-size:12px;padding:9px" onclick="applySubstitute(${s.id})">🙋 我来当替身</button>`:''}
+        ${s.applicants && s.applicants.length>0 && (isCreator || s.poster_openid===ME)?s.applicants.map(ap=>{
+          const au=getUser(ap.openid);
+          return `<div class="sub-applicant">
+            <div class="mav" style="width:28px;height:28px;font-size:13px">${au.avatar}</div>
+            <div class="sa-info"><span class="sa-name">${au.nickname}</span>${au.bio?`<div class="sa-bio">${au.bio}</div>`:''}</div>
+            ${s.status==='open'&&(isCreator||s.poster_openid===ME)?`<button class="sa-btn confirm" onclick="confirmSubstitute(${s.id},'${ap.openid}')">确认替身</button>`:''}
+          </div>`;
+        }).join(''):''}
+      </div>`;
+    });
+    html += `</div>`;
+  }
+
+  const actionTall = (!hasJoined && !isCreator && t.audit_level!=='none' && (!myApp || (myApp.status==='rejected')));
+  html += `<div style="height:${actionTall?340:240}px"></div>`;
+
+  // 操作区
+  html += `<div class="actions">`;
+  if(isDone){
+    // 需求8: 已完成的队伍可以重新开放
+    if(isCreator){
+      html += `<div class="act-row creator-row">
+        <span style="font-size:13px;color:#34d399">🎉 已完队</span>
+        <button class="reopen-btn" onclick="doReopen()">🔄 重新开放组队</button>
+      </div>`;
+    } else {
+      html += `<div class="act-row status-wrap"><span class="pending" style="color:#34d399">🎉 这支舞已经跳完啦，记录已留在小程序</span></div>`;
+    }
+  } else if(t.status==='cancelled'){
+    html += `<div class="act-row status-wrap"><span class="rejected">❌ 该组队已取消</span></div>`;
+  } else if(!hasJoined && !isCreator && t.audit_level==='none' && !myApp){
+    html += `<div class="act-row apply-wrap" style="flex-direction:column">
+      <input class="join-input" placeholder="你跳什么位置？" value="${joinInputVal}" oninput="joinInputVal=this.value">
+      <input class="join-input" placeholder="给车主留句话？（选填）" value="${applyMessage}" oninput="applyMessage=this.value">
+      <button class="join-btn" onclick="doJoin()">🚀 我要上车</button>
+    </div>`;
+  } else if(!hasJoined && !isCreator && t.audit_level!=='none' && (!myApp || (myApp.status==='rejected'))){
+    // 需求11: 被拒绝两次后不能再申请
+    const rejectCount = myApp ? (myApp.reject_count||0) : 0;
+    if(rejectCount>=2){
+      html += `<div class="act-row status-wrap">
+        <span class="blocked">🚫 该组队已拒绝你 ${rejectCount} 次，无法再次申请</span>
+        <span style="font-size:11px;color:#a094b8">试试其他组队吧，路演搭子很多~</span>
+      </div>`;
+    } else {
+      html += `<div class="act-row apply-wrap">
+        <span class="t">📹 申请上车（需车主审核）${rejectCount>0?` · 已被拒 ${rejectCount} 次，还剩 ${2-rejectCount} 次机会`:''}</span>
+        <div class="opt-row">
+          <div class="opt ${applyMode==='upload'?'active':''}" onclick="setApplyMode('upload')">📹 上传视频</div>
+          <div class="opt ${applyMode==='link'?'active':''}" onclick="setApplyMode('link')">🔗 视频链接</div>
+        </div>
+        ${applyMode==='upload'
+          ? `<div class="upload-box ${videoInputVal?'done':''}" onclick="mockUpload()">${videoInputVal?('✅ 已选择：'+videoInputVal+'（点击重选）'):'⬆️ 点击上传舞蹈视频（仅车主可见）'}</div>`
+          : `<input class="join-input" placeholder="舞蹈视频链接（抖音/B站/视频号）" value="${videoInputVal}" oninput="videoInputVal=this.value">`}
+        <input class="join-input" placeholder="想跳的位置？（如：karina位）" value="${joinInputVal}" oninput="joinInputVal=this.value">
+        <input class="join-input" placeholder="给车主留句话？（选填）" value="${applyMessage}" oninput="applyMessage=this.value">
+        <span class="hint">💡 车主看过后决定通过，视频仅车主可见</span>
+        <button class="join-btn" onclick="doApply()">📩 提交申请</button>
+      </div>`;
+    }
+  } else if(myApp && myApp.status==='pending'){
+    html += `<div class="act-row status-wrap"><span class="pending">⏳ 申请已提交，等待车主审核视频...</span></div>`;
+  } else if(myApp && myApp.status==='rejected'){
+    const rejectCount = myApp.reject_count||1;
+    if(rejectCount>=2){
+      html += `<div class="act-row status-wrap">
+        <span class="blocked">🚫 已被拒绝 ${rejectCount} 次，无法再次申请</span>
+      </div>`;
+    } else {
+      html += `<div class="act-row status-wrap">
+        <span class="rejected">😢 这次没通过，车主留了句话：</span>
+        <div class="reject-msg">"${myApp.reject_msg||'这次坑位已满，期待下次同车～'}"</div>
+        <span style="font-size:11px;color:#a094b8">还剩 ${2-rejectCount} 次申请机会</span>
+        <button class="join-btn" onclick="reapply()">重新申请</button>
+      </div>`;
+    }
+  } else if(hasJoined && !isCreator){
+    html += `<div class="act-row joined-row">
+      <span class="jt">✅ 你已上车</span>
+      <button class="substitute-btn" onclick="postSubstitute()">🔄 找人替我</button>
+      <button class="leave-btn" onclick="doLeave()">下车</button>
+    </div>`;
+  } else if(isCreator){
+    html += `<div class="act-row creator-row">${t.member_count>=2?'<button class="complete-btn" onclick="doComplete()">✅ 组队完成</button>':''}<button class="cancel-btn" onclick="doCancel()">❌ 取消组队</button></div>`;
+  }
+  html += `</div>`;
+
+  // 成员管理弹窗（需求5）
+  if(manageMemberOpenid){
+    const m = t.members.find(x=>x.openid===manageMemberOpenid);
+    if(m){
+      html += `<div class="overlay" onclick="closeManage()"></div>`;
+      html += `<div class="manage-popup">
+        <div class="mp-title">管理成员 - ${getUser(m.openid).nickname}</div>
+        <div class="mp-item" onclick="openPosEdit('${m.openid}')">
+          <span class="mp-ico">✏️</span>
+          <div><div class="mp-text">修改成员位置</div><div class="mp-desc">当前：${m.part||'未填写'}</div></div>
+        </div>
+        <div class="mp-item" onclick="removeMember('${m.openid}')">
+          <span class="mp-ico">🗑️</span>
+          <div><div class="mp-text">移除该成员</div><div class="mp-desc">移除后该位置回到缺位列表</div></div>
+        </div>
+        <div class="mp-close" onclick="closeManage()">取消</div>
+      </div>`;
+    }
+  }
+
+  // 修改位置弹窗（需求5）
+  if(posEditOpenid){
+    const m = t.members.find(x=>x.openid===posEditOpenid);
+    if(m){
+      html += `<div class="overlay" onclick="closePosEdit()"></div>`;
+      html += `<div class="pos-edit-popup">
+        <div class="pe-title">修改 ${getUser(m.openid).nickname} 的位置</div>
+        <input id="posEditInput" placeholder="如：karina位" value="${m.part||''}">
+        <div class="pe-btns">
+          <button class="pe-cancel" onclick="closePosEdit()">取消</button>
+          <button class="pe-save" onclick="savePosEdit()">保存</button>
+        </div>
+      </div>`;
+    }
+  }
+
+  // bio弹窗（需求9）
+  if(bioPopupOpenid){
+    const u = getUser(bioPopupOpenid);
+    const isMem = t.members.some(m=>m.openid===bioPopupOpenid);
+    if(isMem){
+      const canSeeBio = bioVisible || bioPopupOpenid===ME || bioPopupOpenid===t.creator_openid;
+      html += `<div class="overlay" onclick="closeBioPopup()"></div>`;
+      html += `<div class="bio-popup">
+        <div class="bp-av">${u.avatar}</div>
+        <div class="bp-name">${u.nickname}</div>
+        ${canSeeBio?(u.bio?`<div class="bp-bio">"${u.bio}"</div>`:'<div class="bp-bio" style="color:#6b5e80">暂无简介</div>'):'<div class="bp-bio" style="color:#6b5e80">🔒 组队完成后可见简介</div>'}
+        ${contactVisible?`<div style="font-size:12px;color:#60a5fa;margin-bottom:16px">💬 微信：${u.wechat}</div>`:''}
+        <button class="bp-close" onclick="closeBioPopup()">关闭</button>
+      </div>`;
+    }
+  }
+
+  document.getElementById('screen2').innerHTML = html;
+}
+
+// 成员管理相关（需求5）
+function openManage(openid){ manageMemberOpenid=openid; renderDetail(); }
+function closeManage(){ manageMemberOpenid=null; renderDetail(); }
+function openPosEdit(openid){ posEditOpenid=openid; manageMemberOpenid=null; renderDetail(); setTimeout(()=>{const inp=document.getElementById('posEditInput');if(inp)inp.focus();},50); }
+function closePosEdit(){ posEditOpenid=null; renderDetail(); }
+function savePosEdit(){
+  const t=TEAMS.find(x=>x.id===detailId);
+  const m=t.members.find(x=>x.openid===posEditOpenid);
+  if(!m)return;
+  const val=(document.getElementById('posEditInput').value||'').trim();
+  m.part=val||'未填写';
+  toast('位置已更新');
+  posEditOpenid=null;
+  renderDetail();
+}
+function removeMember(openid){
+  const t=TEAMS.find(x=>x.id===detailId);
+  const m=t.members.find(x=>x.openid===openid);
+  if(!m)return;
+  // 移除后该位置回到缺位列表
+  if(m.part) t.missing_positions.push(m.part);
+  t.members=t.members.filter(x=>x.openid!==openid);
+  t.member_count=t.members.length;
+  t.applications=(t.applications||[]).filter(a=>a.openid!==openid);
+  toast('已移除成员，位置已回到缺位列表');
+  manageMemberOpenid=null;
+  renderDetail();
+  refreshLeft();
+}
+
+// bio弹窗（需求9）
+function showBioPopup(openid){ bioPopupOpenid=openid; renderDetail(); }
+function closeBioPopup(){ bioPopupOpenid=null; renderDetail(); }
+
+// 找替功能（需求3）
+function postSubstitute(){
+  const t=TEAMS.find(x=>x.id===detailId);
+  const myMember = t.members.find(m=>m.openid===ME);
+  if(!myMember){toast('你不在该队伍中');return;}
+  // 检查是否已有找替
+  const exist = SUBSTITUTES.find(s=>s.team_id===t.id && s.poster_openid===ME && s.status==='open');
+  if(exist){toast('你已发布过找替信息');return;}
+  const sub={ id:++subIdCounter, team_id:t.id, poster_openid:ME, poster_name:ME_USER.nickname, part:myMember.part, status:'open', applicants:[] };
+  SUBSTITUTES.push(sub);
+  toast('找替信息已发布 🔄');
+  renderDetail();
+}
+function applySubstitute(subId){
+  const sub=SUBSTITUTES.find(s=>s.id===subId);
+  if(!sub)return;
+  if(sub.applicants.some(a=>a.openid===ME)){toast('你已经申请过了');return;}
+  sub.applicants.push({openid:ME,nickname:ME_USER.nickname});
+  toast('已申请当替身 🙋');
+  renderDetail();
+}
+function confirmSubstitute(subId,applicantOpenid){
+  const sub=SUBSTITUTES.find(s=>s.id===subId);
+  if(!sub)return;
+  const t=TEAMS.find(x=>x.id===detailId);
+  if(!t)return;
+  // 替身替换原成员
+  const oldMember = t.members.find(m=>m.openid===sub.poster_openid);
+  if(oldMember){
+    // 移除原成员
+    t.members = t.members.filter(m=>m.openid!==sub.poster_openid);
+    // 添加替身
+    t.members.push({openid:applicantOpenid, part:sub.part});
+    t.member_count = t.members.length;
+  }
+  sub.status='matched';
+  const ap = sub.applicants.find(a=>a.openid===applicantOpenid);
+  if(ap) ap.confirmed=true;
+  toast('替身已确认！✅');
+  renderDetail();
+  refreshLeft();
+}
+
+// 重新开放组队（需求8）
+function doReopen(){
+  const t=TEAMS.find(x=>x.id===detailId);
+  t.status='active';
+  toast('组队已重新开放 🔄');
+  renderDetail();
+  refreshLeft();
+}
+
+function setApplyMode(m){ applyMode=m; if(m==='upload'&&!videoInputVal) videoInputVal=''; renderDetail(); }
+function mockUpload(){ videoInputVal='dance_'+Math.floor(100000+Math.random()*900000)+'.mp4'; renderDetail(); }
+function viewVideo(url){ if(!url){toast('未提供视频');return;} if(url.indexOf('[本地]')===0){ toast('车主可查看你上传的视频'); } else { toast('📋 链接已复制：'+url); } }
+
+function doJoin(){
+  const t=TEAMS.find(x=>x.id===detailId);
+  if(!joinInputVal.trim()){toast('请填写你想跳的位置');return;}
+  if(t.members.length>=t.max_members){toast('人数已满');return;}
+  t.members.push({openid:ME,part:joinInputVal.trim()});
+  t.member_count=t.members.length;
+  if(t.audit_level==='none' && joinInputVal.trim() && t.missing_positions.includes(joinInputVal.trim())){
+    t.missing_positions=t.missing_positions.filter(p=>p!==joinInputVal.trim());
+  }
+  toast('上车成功! 🚀');
+  joinInputVal=''; applyMessage='';
+  renderDetail();
+  refreshLeft();
+}
+
+function doApply(){
+  const t=TEAMS.find(x=>x.id===detailId);
+  if(!joinInputVal.trim()){toast('请填写你想跳的位置');return;}
+  if(!videoInputVal.trim()){toast(applyMode==='upload'?'请先上传舞蹈视频':'请填写舞蹈视频链接');return;}
+  const v = applyMode==='upload' ? '[本地]'+videoInputVal : videoInputVal.trim();
+  t.applications=t.applications.filter(a=>a.openid!==ME);
+  t.applications.push({openid:ME,nickname:ME_USER.nickname,part:joinInputVal.trim(),video_url:v,status:'pending',message:applyMessage.trim(),reject_count:0});
+  toast('申请已提交 📩 等车主审核');
+  joinInputVal=''; videoInputVal=''; applyMessage='';
+  renderDetail();
+}
+
+function reapply(){
+  const t=TEAMS.find(x=>x.id===detailId);
+  const myApp = t.applications.find(a=>a.openid===ME);
+  // 保留 reject_count
+  const rc = myApp ? (myApp.reject_count||0) : 0;
+  t.applications=t.applications.filter(a=>a.openid!==ME);
+  applyMode='upload'; videoInputVal=''; applyMessage='';
+  renderDetail();
+}
+
+function review(openid,approve){
+  const t=TEAMS.find(x=>x.id===detailId);
+  const a=t.applications.find(x=>x.openid===openid);
+  if(!a)return;
+  if(approve){
+    if(t.members.length>=t.max_members){toast('人数已满，无法通过');return;}
+    a.status='approved';
+    t.members.push({openid:a.openid,part:a.part});
+    t.member_count=t.members.length;
+    if(a.part && t.missing_positions.includes(a.part)){ t.missing_positions=t.missing_positions.filter(p=>p!==a.part); }
+    toast('已接受组队，对方上车成功! ✅ 双方已可互看微信');
+    renderDetail();
+    refreshLeft();
+  }
+}
+
+function doLeave(){
+  const t=TEAMS.find(x=>x.id===detailId);
+  const myMember=t.members.find(m=>m.openid===ME);
+  if(myMember && myMember.part) t.missing_positions.push(myMember.part);
+  t.members=t.members.filter(m=>m.openid!==ME);
+  t.applications=(t.applications||[]).filter(a=>a.openid!==ME);
+  t.member_count=t.members.length;
+  // 清理找替
+  SUBSTITUTES=SUBSTITUTES.filter(s=>!(s.team_id===t.id && s.poster_openid===ME));
+  toast('已下车');
+  renderDetail();
+  refreshLeft();
+}
+
+function doComplete(){
+  const t=TEAMS.find(x=>x.id===detailId);
+  t.status='completed';
+  toast('组队完成! 🎉 记录已留存');
+  closeDetail();
+  refreshLeft();
+}
+
+function doCancel(){
+  const t=TEAMS.find(x=>x.id===detailId);
+  t.status='cancelled';
+  toast('组队已取消');
+  closeDetail();
+  refreshLeft();
+}
+
+function refreshLeft(){
+  if(leftView==='home'||currentTab==='home') renderHome();
+  else if(leftView==='mine') renderMine();
+  else if(leftView==='feedback') renderFeedback();
+  else if(leftView==='profileEdit') renderProfileEdit();
+}
+
+// ═══════════ 委婉拒绝（需求11: reject_count计数） ═══════════
+let rejectOpenid=null, rejectPick='full', rejectCustom='';
+function renderReject(openid){
+  rejectOpenid=openid;
+  const t=TEAMS.find(x=>x.id===detailId);
+  const a=t.applications.find(x=>x.openid===openid);
+  const u=getUser(openid);
+  document.getElementById('nav2').innerHTML=`<span class="back" onclick="renderDetail()">‹</span>委婉拒绝`;
+  document.getElementById('screen2').innerHTML=`
+    <div class="form"><div class="fcard">
+      <h3>💌 委婉拒绝 ${u.nickname}</h3>
+      <div class="sub">选一个理由，或自己写一句友好提示发给 TA～</div>
+      ${REJECT_PRESETS.map(p=>`<div class="reject-item ${rejectPick===p.key?'active':''}" onclick="rejectPick='${p.key}';rejectCustom='';renderReject('${openid}')">
+        <div class="ri-radio">${rejectPick===p.key?'●':'○'}</div>
+        <div class="ri-text"><b>${p.label}</b><br>${p.msg}</div>
+      </div>`).join('')}
+      <div class="reject-item ${rejectPick==='custom'?'active':''}" onclick="rejectPick='custom';renderReject('${openid}')">
+        <div class="ri-radio">${rejectPick==='custom'?'●':'○'}</div>
+        <div class="ri-text"><b>自己写理由</b><br><span style="font-size:11px;color:#a094b8">想说什么就写什么，都会以友好口吻发出</span></div>
+      </div>
+      ${rejectPick==='custom'?`<textarea id="rejectCustom" placeholder="如：这次编舞风格不太适合你，但你跳得很好，下次有合适坑位一定找你～" oninput="rejectCustom=this.value" style="width:100%;min-height:80px;background:rgba(255,255,255,0.04);border:1px solid rgba(192,132,252,0.15);border-radius:10px;padding:11px 14px;font-size:13px;color:#f0e6ff;outline:none;font-family:inherit;margin-top:8px">${rejectCustom}</textarea>`:''}
+      <button class="submit-btn" onclick="confirmReject()">发送友好拒绝</button>
+      <button class="cancel-link" onclick="renderDetail()">返回</button>
+    </div></div>`;
+}
+
+function confirmReject(){
+  const t=TEAMS.find(x=>x.id===detailId);
+  const a=t.applications.find(x=>x.openid===rejectOpenid);
+  if(!a)return;
+  let msg;
+  if(rejectPick==='custom'){
+    msg=(rejectCustom||'').trim();
+    if(!msg){ toast('请填写你的拒绝理由'); return; }
+  } else {
+    const p=REJECT_PRESETS.find(x=>x.key===rejectPick);
+    msg=p?p.msg:REJECT_PRESETS[0].msg;
+  }
+  a.status='rejected';
+  a.reject_msg=msg;
+  // 需求11: 增加拒绝计数
+  a.reject_count=(a.reject_count||0)+1;
+  toast(`已委婉拒绝 💌 该申请人已被拒 ${a.reject_count} 次（2次后将无法再申请）`);
+  renderDetail();
+  refreshLeft();
+}
+
+// 初始化
+renderHome();
+closeDetail();
 </script>
 </body>
 </html>
